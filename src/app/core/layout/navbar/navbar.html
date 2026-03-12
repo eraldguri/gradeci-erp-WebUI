@@ -1,0 +1,40 @@
+<nav class="navbar navbar-light bg-white border-bottom px-3">
+
+    <button
+      class="btn btn-outline-secondary me-3"
+      (click)="toggleSidebar.emit()">
+      ☰
+    </button>
+
+    <span class="fw-semibold">ERP System</span>
+
+    <div class="ms-auto d-flex align-items-center gap-3">
+
+      @if (notifications > 0) {
+        <span class="badge bg-danger">
+          {{notifications}}
+        </span>
+      }
+
+      <div class="dropdown">
+
+        <button class="btn btn-light dropdown-toggle"
+                data-bs-toggle="dropdown">
+          Admin
+        </button>
+
+        <ul class="dropdown-menu dropdown-menu-end">
+
+          @for (item of menu; track item) {
+            <li>
+              <a class="dropdown-item">{{item}}</a>
+            </li>
+          }
+
+        </ul>
+
+      </div>
+
+    </div>
+
+  </nav>

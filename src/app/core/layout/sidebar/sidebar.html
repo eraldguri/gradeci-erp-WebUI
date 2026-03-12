@@ -1,0 +1,34 @@
+<aside class="bg-dark sidebar" [class.collapsed]="collapsed">
+
+	<div class="sidebar-logo">
+		@if (!collapsed) {
+			<span class="g-box">G</span><span class="text-remainder">radeci</span>
+		} @else {
+			<span class="g-box">G</span>
+		}
+		
+	</div>
+
+    <ul class="nav flex-column p-2">
+
+      @for (item of menu; track item.label) {
+
+        <li class="nav-item">
+
+          <a class="nav-link text-white d-flex align-items-center gap-2">
+
+            <i class="bi {{item.icon}}"></i>
+
+            @if (!collapsed) {
+              <span>{{item.label}}</span>
+            }
+
+          </a>
+
+        </li>
+
+      }
+
+    </ul>
+
+  </aside>
