@@ -6,38 +6,58 @@
             <small class="text-muted">Enterprise Platform</small>
         </div>
 
-        <form>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
             <div class="mb-3">
                 <label class="form-label">Tenant</label>
                 <input
-                type="text"
-                class="form-control"
-                name="tenant"
-                required
-                placeholder="Enter tenant"/>
+                    type="text"
+                    class="form-control"
+                    [class.is-invalid]="loginForm.get('tenant')?.touched && loginForm.get('tenant')?.invalid"
+                    name="tenant"
+                    required
+                    formControlName="tenant"
+                    placeholder="Enter tenant"/>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Username</label>
                 <input
-                type="text"
-                class="form-control"
-                name="username"
-                required
-                placeholder="Enter username"/>
+                    type="text"
+                    class="form-control"
+                    [class.is-invalid]="loginForm.get('username')?.touched && loginForm.get('username')?.invalid"
+                    name="username"
+                    formControlName="username"
+                    required
+                    placeholder="Enter username"/>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Password</label>
                 <input
-                type="password"
-                class="form-control"
-                name="password"
-                required
-                placeholder="Enter Password"/>
+                    type="password"
+                    class="form-control"
+                    [class.is-invalid]="loginForm.get('password')?.touched && loginForm.get('password')?.invalid"
+                    name="password"
+                    formControlName="password"
+                    required
+                    placeholder="Enter Password"/>
             </div>
 
-            <button type="submit" class="btn btn-primary w-100">Login</button>
+            @if (errorMessage()) {
+                <div class="alert alert-danger py-2 small">{{ errorMessage() }}</div>
+            }
+
+            <button 
+                type="submit" 
+                class="btn btn-primary w-100 d-flex align-items-center justify-content-center"
+                [disabled]="loginForm.invalid || isLoading()">
+                @if (isLoading()) {
+                    <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                    <span>Authenticating...</span>
+                } @else {
+                    <span>Sign In</span>
+                }
+            </button>
         </form>
 
     <div class="text-center mt-3 text-muted small">

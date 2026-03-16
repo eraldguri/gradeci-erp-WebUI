@@ -1,40 +1,31 @@
 <nav class="navbar navbar-light bg-white border-bottom px-3">
+  <button class="btn btn-outline-secondary me-3" (click)="toggleSidebar.emit()">
+    ☰
+  </button>
 
-    <button
-      class="btn btn-outline-secondary me-3"
-      (click)="toggleSidebar.emit()">
-      ☰
-    </button>
+  <span class="fw-semibold">ERP System</span>
 
-    <span class="fw-semibold">ERP System</span>
+  <div class="ms-auto d-flex align-items-center gap-3">
+    @if (notifications > 0) {
+      <span class="badge bg-danger">
+        {{notifications}}
+      </span>
+    }
 
-    <div class="ms-auto d-flex align-items-center gap-3">
+    <div class="dropdown" ngbDropdown>
 
-      @if (notifications > 0) {
-        <span class="badge bg-danger">
-          {{notifications}}
-        </span>
-      }
+      <button class="btn btn-light dropdown-toggle" ngbDropdownToggle type="button">
+        {{ userData?.name }}
+      </button>
 
-      <div class="dropdown">
-
-        <button class="btn btn-light dropdown-toggle"
-                data-bs-toggle="dropdown">
-          Admin
-        </button>
-
-        <ul class="dropdown-menu dropdown-menu-end">
-
-          @for (item of menu; track item) {
-            <li>
-              <a class="dropdown-item">{{item}}</a>
-            </li>
-          }
-
-        </ul>
-
-      </div>
+      <ul class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+        @for (item of menu; track $index) {
+          <li>
+            <a class="dropdown-item" style="cursor: pointer;" (click)="onUserDropdownItemClick(item.route)">{{item.title}}</a>
+          </li>
+        }
+      </ul>
 
     </div>
-
-  </nav>
+  </div>
+</nav>
