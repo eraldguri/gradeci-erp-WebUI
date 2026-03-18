@@ -6,29 +6,49 @@
 		} @else {
 			<span class="g-box">G</span>
 		}
-		
 	</div>
 
     <ul class="nav flex-column p-2">
+		@for (item of menuItems(); track item.label) {
+			<li class="nav-item" [class.has-children]="item.children?.length">
+				<a 
+					class="nav-link text-white d-flex align-items-center gap-2"
+					[class.justify-content-between]="item.children?.length && !collapsed"
+					[class.active]="item.active"
+					(click)="toggleItem(item)">
 
-      @for (item of menu; track item.label) {
+					<div class="d-flex align-items-center">
+						<i class="bi {{item.icon}}"></i>
+						@if (!collapsed) {
+							<span class="nav-label">{{item.label}}</span>
+						}
+					</div>
+					
+					@if (item.children?.length && !collapsed) {
+						<i
+							class="bi dropdown-icon"
+							[class.bi-chevron-down]="!item.expanded"
+							[class.bi-chevron-up]="item.expanded">
+						</i>
+					}
+				</a>
 
-        <li class="nav-item">
-
-          <a class="nav-link text-white d-flex align-items-center gap-2">
-
-            <i class="bi {{item.icon}}"></i>
-
-            @if (!collapsed) {
-              <span>{{item.label}}</span>
-            }
-
-          </a>
-
-        </li>
-
-      }
-
+				@if (item.children?.length && item.expanded && !collapsed) {
+					<ul class="child-menu">
+						@for (child of item.children; track child.label) {
+							<li>
+								<a
+									class="child-link d-flex align-items-center"
+									[class.active]="child.active"
+									(click)="selectChild(child, item)">
+									<span class="bullet"></span>
+									<span class="child-label">{{ child.label }}</span>
+								</a>
+							</li>
+						}
+					</ul>
+				}
+			</li>
+		}
     </ul>
-
   </aside>

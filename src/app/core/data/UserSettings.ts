@@ -1,0 +1,3 @@
+interface UserSettings {
+    sidebarCollapsed: boolean;
+}

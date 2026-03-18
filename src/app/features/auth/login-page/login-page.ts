@@ -3,6 +3,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
 import { Router } from '@angular/router';
 import { LocalStorageService } from '../../../core/services/local-storage.service';
+import { USER_PREFS } from '../../../core/data/constants/UserSettingsConstants';
 
 @Component({
   selector: 'app-login-page',
@@ -47,7 +48,7 @@ export class LoginPage {
 			next: (response) => {
 				if (response.isSuccessful) {
 
-					this.storage.setItem("user_prefs", response.data);
+					this.storage.setItem(USER_PREFS, response.data);
 					
 					this.isLoading.set(false);
 					this.router.navigate(['/main']);

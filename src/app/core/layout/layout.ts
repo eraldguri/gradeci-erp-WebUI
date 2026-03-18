@@ -5,6 +5,8 @@ import { Router, RouterOutlet } from "@angular/router";
 import { LocalStorageService } from '../services/local-storage.service';
 import { AuthService } from '../services/auth.service';
 import { EMAIL_ADDRESS, JwtPayload, MOBILE_PHONE, NAME, NAME_IDENTIFIER, ROLE, SURNAME } from '../data/JwtPayload';
+import { MainMenuService } from '../services/main-menu.service';
+import { USER_PREFS } from '../data/constants/UserSettingsConstants';
 
 @Component({
   selector: 'app-layout',
@@ -18,16 +20,20 @@ export class Layout implements OnInit {
 
 	private authService = inject(AuthService);
 	private storage = inject(LocalStorageService);
+	private mainMenuService = inject(MainMenuService);
 	private router = inject(Router);
 
 	user = signal<CurrentUser | null>(null);
 
 	ngOnInit(): void {
 		this.getUsetData();
+
+		const collapsed = this.mainMenuService.getUserSettings().sidebarCollapsed;
+		this.sidebarCollapsed.set(collapsed);
 	}
 	
 	getUsetData() {
-		const userPrefs = this.storage.getItem<UserData>('user_prefs');
+		const userPrefs = this.storage.getItem<UserData>(USER_PREFS);
 
 		if (!userPrefs?.jwt) {
 			this.router.navigate(['/login']);
@@ -53,6 +59,11 @@ export class Layout implements OnInit {
 
 	toggleSidebar() {
 		this.sidebarCollapsed.update(v => !v);
+
+		const userSettings: UserSettings = {
+			sidebarCollapsed: this.sidebarCollapsed()
+		}
+		this.mainMenuService.saveUserSettings(userSettings);
 	}
 
 	toggleMobileSidebar() {

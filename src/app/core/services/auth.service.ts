@@ -2,8 +2,8 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { inject, Injectable, signal } from "@angular/core";
 import { jwtDecode } from "jwt-decode";
 import { tap } from "rxjs";
-import { JwtPayload } from "../data/JwtPayload";
 import { LocalStorageService } from "./local-storage.service";
+import { USER_PREFS } from "../data/constants/UserSettingsConstants";
 
 @Injectable({ 
     providedIn: 'root' 
@@ -38,7 +38,7 @@ export class AuthService {
     }
 
     isLoggedIn(): boolean {
-        if (!this.storageService.getItem('user_prefs')) {
+        if (!this.storageService.getItem(USER_PREFS)) {
             return false;
         }
         return true;
