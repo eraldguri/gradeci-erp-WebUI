@@ -1,9 +1,10 @@
 import { Component, inject, Input, signal } from '@angular/core';
 import { MainMenuService } from '../../services/main-menu.service';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.scss',
 })
@@ -12,6 +13,7 @@ export class Sidebar {
 	@Input() collapsed = false;
 	sidebarWidth = signal(260);
 	private mainMenuService = inject(MainMenuService);
+	private router = inject(Router);
 
 	menuItems = this.mainMenuService.menuItems;
 
@@ -20,6 +22,10 @@ export class Sidebar {
 			item.expanded = !item.expanded;
 		} else {
 			this.setActive(item);
+
+			if (item.children === undefined) {
+				this.router.navigate([item.route]);
+			}
 		}
 	}
 
@@ -29,6 +35,9 @@ export class Sidebar {
 		child.active = true;
 		parent.active = true;
 		parent.expanded = true;
+
+		this.router.navigate([child.route]);
+
 	}
 
 	setActive(item: MenuItem): void {
@@ -54,7 +63,6 @@ export class Sidebar {
 	}
 
 	navigateTo(item: MenuItem): void {
-		console.log('Navigating to:', item.route);
 		this.menuItems().forEach(i => {
 			i.active
 		})

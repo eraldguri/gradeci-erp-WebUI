@@ -18,10 +18,11 @@ export class MainMenuService {
         },
         {
             label: 'Accounts',
+            route: '/accounts',
             icon: 'bi-cart',
             children: [
-                { label: 'Create Account' },
-                { label: 'View Accounts' },
+                { label: 'Create Account', route: '/accounts/create-account' },
+                { label: 'View Accounts', route: '/accounts/view-accounts' },
                 { label: 'Import Accounts' }
             ]
         },
