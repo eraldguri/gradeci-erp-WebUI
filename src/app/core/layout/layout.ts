@@ -28,8 +28,13 @@ export class Layout implements OnInit {
 	ngOnInit(): void {
 		this.getUsetData();
 
-		const collapsed = this.mainMenuService.getUserSettings().sidebarCollapsed;
-		this.sidebarCollapsed.set(collapsed);
+		if (this.mainMenuService.getUserSettings() !== null) {
+			const collapsed = this.mainMenuService.getUserSettings().sidebarCollapsed;
+			this.sidebarCollapsed.set(collapsed);
+		} else {
+			this.sidebarCollapsed.set(false);
+		}
+		
 	}
 	
 	getUsetData() {

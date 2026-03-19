@@ -1,7 +1,7 @@
 import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
-import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
-import { LocalStorageService } from '../../services/local-storage.service';
-import { Router } from '@angular/router';
+import { NgbDropdownModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { LogoutModal } from "../../modals/logout-modal/logout-modal";
+import { AuthService } from '../../services/auth.service';
 
 interface UserDropDownItem {
 	route: string;
@@ -14,12 +14,12 @@ interface UserDropDownItem {
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
 })
-export class Navbar implements OnInit {
+export class Navbar {
 	@Output() toggleSidebar = new EventEmitter<void>()
 	@Input() userData: CurrentUser | null = null;
 
-	private storage = inject(LocalStorageService);
-	private router = inject(Router);
+	private modalService = inject(NgbModal);
+	private authService = inject(AuthService);
 
 	notifications = 3
 
@@ -40,16 +40,21 @@ export class Navbar implements OnInit {
 
 	onUserDropdownItemClick(route: string) {
 		switch (route) {
-			case 'logout': this.logoutUser();
+			case 'logout': this.openLogoutModal();
 		}
 	}
 
-	private logoutUser() {
-		this.storage.clear();
-		this.router.navigate(['/login']);
+	openLogoutModal(): void {
+		this.modalService.open(LogoutModal, { centered: true, size: 'md' }).result.then(
+			(result) => {
+				if (result === 'confirm') {
+					this.authService.logout();
+				}
+			},
+			() => {
+				//dismiss
+			}
+		);
 	}
-
-	ngOnInit(): void {
-   	 	console.log(this.userData);
-  	}	
+	
 }

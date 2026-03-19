@@ -51,7 +51,7 @@ export class LoginPage {
 					this.storage.setItem(USER_PREFS, response.data);
 					
 					this.isLoading.set(false);
-					this.router.navigate(['/main']);
+					this.router.navigate(['/dashboard']);
 				}
 			},
 			error: (error) => {

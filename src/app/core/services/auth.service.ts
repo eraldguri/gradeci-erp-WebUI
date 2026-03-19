@@ -4,6 +4,7 @@ import { jwtDecode } from "jwt-decode";
 import { tap } from "rxjs";
 import { LocalStorageService } from "./local-storage.service";
 import { USER_PREFS } from "../data/constants/UserSettingsConstants";
+import { Router } from "@angular/router";
 
 @Injectable({ 
     providedIn: 'root' 
@@ -11,6 +12,7 @@ import { USER_PREFS } from "../data/constants/UserSettingsConstants";
 export class AuthService {
     private http = inject(HttpClient);
     private storageService = inject(LocalStorageService);
+    private router = inject(Router);
     private readonly API_URL = 'https://localhost:7114/api/Token/login';
 
     currentUser = signal<LoginResponse | null>(null);
@@ -42,5 +44,10 @@ export class AuthService {
             return false;
         }
         return true;
+    }
+
+    logout(): void {
+        this.storageService.clear();
+		this.router.navigate(['/login']);
     }
 }
