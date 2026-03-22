@@ -5,6 +5,7 @@ import { tap } from "rxjs";
 import { LocalStorageService } from "./local-storage.service";
 import { USER_PREFS } from "../data/constants/UserSettingsConstants";
 import { Router } from "@angular/router";
+import { LOGIN } from "../data/constants/ApiConstants";
 
 @Injectable({ 
     providedIn: 'root' 
@@ -13,7 +14,6 @@ export class AuthService {
     private http = inject(HttpClient);
     private storageService = inject(LocalStorageService);
     private router = inject(Router);
-    private readonly API_URL = 'https://localhost:7114/api/Token/login';
 
     currentUser = signal<LoginResponse | null>(null);
 
@@ -23,7 +23,7 @@ export class AuthService {
             'tenant': tenant
         });
 
-        return this.http.post<LoginResponse>(`${this.API_URL}`, request, { headers: headers }).pipe(
+        return this.http.post<LoginResponse>(`${LOGIN}`, request, { headers: headers }).pipe(
             tap(user => {
                 this.currentUser.set(user);
             })

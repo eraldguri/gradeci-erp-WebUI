@@ -14,12 +14,14 @@ export class MainMenuService {
             label: 'Dashboard',
             icon: 'bi-speedometer2',
             active: false,
-            route: '/dashboard'
+            route: '/dashboard',
+            menuType: 'sidenav'
         },
         {
             label: 'Accounts',
             route: '/accounts',
             icon: 'bi-cart',
+            menuType: 'sidenav',
             children: [
                 { label: 'Create Account', route: '/accounts/create-account' },
                 { label: 'View Accounts', route: '/accounts/view-accounts' },
@@ -30,6 +32,7 @@ export class MainMenuService {
             label: 'Contacts',
             icon: 'bi-box',
             route: '/products',
+            menuType: 'sidenav',
             children: [
                 { label: 'Create Contact', route: '/products/lists' },
                 { label: 'View Contacts', route: '/products/warehouses' },
@@ -39,6 +42,7 @@ export class MainMenuService {
         {
             label: 'Opportunities',
             icon: 'bi bi-emoji-sunglasses-fill',
+            menuType: 'sidenav',
             children: [
                 { label: 'Create Opportunity' },
                 { label: 'View Opportunities' },
@@ -48,6 +52,7 @@ export class MainMenuService {
         {
             label: 'Leads',
             icon: 'bi bi-grid-3x3-gap-fill',
+            menuType: 'sidenav',
             children: [
                 { label: 'Create Lead' },
                 { label: 'View Leads' },
@@ -57,10 +62,25 @@ export class MainMenuService {
         {
             label: 'Quote',
             icon: 'bi bi-grid-3x3-gap-fill',
+            menuType: 'sidenav',
             children: [
                 { label: 'Create Quote' },
                 { label: 'View Quotes' },
                 { label: 'Import Quotes' }
+            ]
+        },
+        {
+            label: 'Settings',
+            menuType: 'navbar',
+            children: [
+                { 
+                    label: 'Profile',
+                    route: '/profile'
+                },
+                {
+                    label: 'Logout',
+                    route: '/logout'
+                }
             ]
         }
     ]);
