@@ -24,6 +24,10 @@ export const routes: Routes = [
             { 
                 path: 'accounts',
                 loadChildren: () => import('./features/accounts/accounts.routes').then(m => m.ACCOUNTS_ROUTES)
+            },
+            {
+                path: 'profile',
+                loadComponent: () => import('./features/profile/profile-view/profile-view').then(m => m.ProfileView)
             }
         ]
     }

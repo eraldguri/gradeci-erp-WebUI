@@ -2,11 +2,8 @@ import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular
 import { NgbDropdownModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LogoutModal } from "../../modals/logout-modal/logout-modal";
 import { AuthService } from '../../services/auth.service';
-
-interface UserDropDownItem {
-	route: string;
-	title: string;
-}
+import { Router } from '@angular/router';
+import { MainMenuService } from '../../services/main-menu.service';
 
 @Component({
   selector: 'app-navbar',
@@ -20,27 +17,19 @@ export class Navbar {
 
 	private modalService = inject(NgbModal);
 	private authService = inject(AuthService);
+	private menuService = inject(MainMenuService);
+	private router = inject(Router);
 
-	notifications = 3
-
-	menu: Array<UserDropDownItem> = [
-		{
-			route: 'profile',
-			title: 'Profile'
-		},
-		{
-			route: 'settings',
-			title: 'Settings'
-		},
-		{
-			route: 'logout',
-			title: 'Logout'
-		},
-	];
+	menuItems = this.menuService.menuItems;
 
 	onUserDropdownItemClick(route: string) {
 		switch (route) {
-			case 'logout': this.openLogoutModal();
+			case '/profile' : 
+				this.router.navigate([route]);
+				break;
+			case '/logout': 
+				this.openLogoutModal();
+				break;
 		}
 	}
 

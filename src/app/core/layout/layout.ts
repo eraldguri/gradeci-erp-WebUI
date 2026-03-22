@@ -7,10 +7,11 @@ import { AuthService } from '../services/auth.service';
 import { EMAIL_ADDRESS, JwtPayload, MOBILE_PHONE, NAME, NAME_IDENTIFIER, ROLE, SURNAME } from '../data/JwtPayload';
 import { MainMenuService } from '../services/main-menu.service';
 import { USER_PREFS } from '../data/constants/UserSettingsConstants';
+import { Toast } from "../widgets/toast/toast";
 
 @Component({
   selector: 'app-layout',
-  imports: [Navbar, Sidebar, RouterOutlet],
+  imports: [Navbar, Sidebar, RouterOutlet, Toast],
   templateUrl: './layout.html',
   styleUrl: './layout.scss',
 })
