@@ -28,6 +28,10 @@ export const routes: Routes = [
             {
                 path: 'profile',
                 loadComponent: () => import('./features/profile/profile-view/profile-view').then(m => m.ProfileView)
+            },
+            {
+                path: 'security',
+                loadComponent: () => import('./features/profile/security/security').then(m => m.Security)
             }
         ]
     }

@@ -37,12 +37,6 @@ export class ProfileView implements OnInit {
 	countries = this.countryService.countries;
 	isLoading = computed(() => this.countries.length === 0);
 
-	constructor() {
-		effect(() => {
-			console.log('Countries updated:', this.countries());
-		});
-	}
-
 	ngOnInit(): void {
 		const userPrefs = this.storageService.getItem<UserData>(USER_PREFS);
 		const token = this.authService.decodeToken<JwtPayload>(userPrefs!.jwt);

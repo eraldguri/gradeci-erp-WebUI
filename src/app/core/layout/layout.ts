@@ -6,7 +6,7 @@ import { LocalStorageService } from '../services/local-storage.service';
 import { AuthService } from '../services/auth.service';
 import { EMAIL_ADDRESS, JwtPayload, MOBILE_PHONE, NAME, NAME_IDENTIFIER, ROLE, SURNAME } from '../data/JwtPayload';
 import { MainMenuService } from '../services/main-menu.service';
-import { USER_PREFS } from '../data/constants/UserSettingsConstants';
+import { USER_DATA, USER_PREFS } from '../data/constants/UserSettingsConstants';
 import { Toast } from "../widgets/toast/toast";
 
 @Component({
@@ -60,6 +60,8 @@ export class Layout implements OnInit {
 			tenant: token.tenant,
 			permissions: token.permission
 		});
+
+		this.storage.setItem(USER_DATA, this.user());
 
 	}
 

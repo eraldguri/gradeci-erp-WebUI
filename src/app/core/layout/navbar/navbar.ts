@@ -27,6 +27,9 @@ export class Navbar {
 			case '/profile' : 
 				this.router.navigate([route]);
 				break;
+			case '/security': 
+				this.router.navigate([route]);
+				break;
 			case '/logout': 
 				this.openLogoutModal();
 				break;
