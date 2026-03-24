@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from "@angular/forms";
 import { LocalStorageService } from '../../../core/services/local-storage.service';
 import { USER_PREFS } from '../../../core/data/constants/UserSettingsConstants';
@@ -6,10 +6,12 @@ import { AuthService } from '../../../core/services/auth.service';
 import { EMAIL_ADDRESS, JwtPayload, MOBILE_PHONE, NAME, NAME_IDENTIFIER, ROLE, SURNAME } from '../../../core/data/JwtPayload';
 import { UserService } from '../../../core/services/user.service';
 import { ToastService } from '../../../core/widgets/toast/toast.service';
+import { CountryService } from '../../../core/services/country.service';
+import { PhoneNumberSelector } from "../../../core/widgets/phone-number-selector/phone-number-selector";
 
 @Component({
   selector: 'app-profile-view',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, PhoneNumberSelector],
   templateUrl: './profile-view.html',
   styleUrl: './profile-view.scss',
 })
@@ -20,6 +22,7 @@ export class ProfileView implements OnInit {
 	private authService = inject(AuthService);
 	private userService = inject(UserService);
 	private toastService = inject(ToastService);
+	private countryService = inject(CountryService);
 
 	userData = signal<CurrentUser | null>(null);
 	
@@ -27,8 +30,18 @@ export class ProfileView implements OnInit {
 		firstName: [''],
 		lastName: [''],
 		email: [''],
-		phoneNumber: ['']
+		phoneNumber: [''],
+		countryCode: ['']
 	});
+
+	countries = this.countryService.countries;
+	isLoading = computed(() => this.countries.length === 0);
+
+	constructor() {
+		effect(() => {
+			console.log('Countries updated:', this.countries());
+		});
+	}
 
 	ngOnInit(): void {
 		const userPrefs = this.storageService.getItem<UserData>(USER_PREFS);

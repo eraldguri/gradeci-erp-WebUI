@@ -19,10 +19,9 @@
 			</div>
 
 			<div class="col-md-6 mb-3">
-				<label>Phone Number</label>
-				<input type="text" class="form-control" formControlName="phoneNumber" />
+				<label class="form-label">Phone Number</label>
+				<app-phone-number-selector [phoneNumber]="userData()?.mobile ?? ''"></app-phone-number-selector>
 			</div>
-
 		</div>
 
 		<button type="submit" class="btn btn-primary mt-3" >
