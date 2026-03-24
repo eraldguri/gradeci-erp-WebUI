@@ -1,0 +1,31 @@
+<form [formGroup]="phoneForm">
+    <div class="input-group has-validation">
+        <select 
+            class="form-select flex-grow-0" 
+            style="width: 120px;" 
+            formControlName="countryCode"
+            [class.is-invalid]="phoneForm.get('countryCode')?.touched && phoneForm.get('countryCode')?.invalid">
+            
+            <option value="" disabled>Code</option>
+            @for(country of countries(); track country.name) {
+                <option [value]="country.code">
+                    {{ country.code }}
+                </option>
+            }
+        </select>
+
+        <input 
+            type="tel" 
+            class="form-control" 
+            formControlName="phoneNumber" 
+            placeholder="Enter number"
+            [class.is-invalid]="phoneForm.get('phoneNumber')?.touched && phoneForm.get('phoneNumber')?.invalid" />
+
+        @if(phoneForm.get('phoneNumber')?.errors?.['required'] && phoneForm.get('phoneNumber')?.touched) {
+            <div class="invalid-feedback">Phone number is required.</div>
+        }
+        @if(phoneForm.get('phoneNumber')?.errors?.['invalidInternationalPhone']) {
+            <div class="invalid-feedback">Please enter a valid format.</div>
+        }
+    </div>
+</form>
