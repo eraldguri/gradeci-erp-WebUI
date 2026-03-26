@@ -76,7 +76,7 @@ export class TenantManagement {
 
 		modalRef.result.then((result) => {
 			if (result === 'confirm') {
-				if (isActivating) {
+				if (tenant.isActive) {
 					this.deactivateTenant(tenant);
 				} else {
 					this.activateTenant(tenant);
@@ -90,6 +90,7 @@ export class TenantManagement {
 			next: (response: ApiResponse<string>) => {
 				if (response && response.isSuccessful) {
 					this.toastService.show(`Tenant ${tenant.name} activated successfully`);
+					this.getTenants();
 				} else {
 					console.log(response.messages);
 				}
@@ -106,6 +107,7 @@ export class TenantManagement {
 			next: (response: ApiResponse<string>) => {
 				if (response && response.isSuccessful) {
 					this.toastService.show(`Tenant ${tenant.name} deactivated successfully`);
+					this.getTenants();
 				} else {
 					console.log(response.messages);
 				}

@@ -18,11 +18,11 @@ export class TenantService extends BaseWebService {
     }
 
     activateTenant(tenantId: string): Observable<ApiResponse<string>> {
-        return this.put<string>(`${ACTIVATE_TENANT.replace('{tenantId}', tenantId)}`, {});
+        return this.put<string>(ACTIVATE_TENANT.replace('{tenantId}', tenantId), {});
     }
 
     deactivateTenant(tenantId: string): Observable<ApiResponse<string>> {
-        return this.put<string>(`${DEACTIVATE_TENANT.replace('{tenantId}', tenantId)}`, {});
+        return this.put<string>(DEACTIVATE_TENANT.replace('{tenantId}', tenantId), {});
     }
 
     upgradeTenant(tenant: UpgradeTenant): Observable<ApiResponse<string>> {
