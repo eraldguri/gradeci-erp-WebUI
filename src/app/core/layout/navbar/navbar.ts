@@ -30,6 +30,9 @@ export class Navbar {
 			case '/security': 
 				this.router.navigate([route]);
 				break;
+			case '/tenants': 
+				this.router.navigate([route]);
+				break;
 			case '/logout': 
 				this.openLogoutModal();
 				break;

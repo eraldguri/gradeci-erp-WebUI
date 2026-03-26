@@ -82,6 +82,10 @@ export class MainMenuService {
                     route: '/security'
                 },
                 {
+                    label: 'Tenants',
+                    route: '/tenants'
+                },
+                {
                     label: 'Logout',
                     route: '/logout'
                 }
