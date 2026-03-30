@@ -36,6 +36,10 @@ export const routes: Routes = [
             {
                 path: 'tenants',
                 loadComponent: () => import('./features/profile/tenant-management/tenant-management').then(m => m.TenantManagement)
+            },
+            {
+                path: 'users',
+                loadComponent: () => import('./features/profile/users/users').then(m => m.Users)
             }
         ]
     }

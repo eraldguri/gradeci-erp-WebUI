@@ -1,0 +1,66 @@
+<div class="d-flex justify-content-start mb-3">
+    <button type="button" class="btn btn-primary">Add User</button>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead class="table-light">
+            <tr>
+                <th scope="col">Username</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Phone Number</th>
+                <th scope="col">Status</th>
+                <th scope="col" class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (isLoading()) {
+                <tr>
+                    <td colspan="7" class="text-center">Loading tenants...</td>
+                </tr>
+            } @else if (users().length === 0) {
+                <tr>
+                    <td colspan="7" class="text-center">No tenants found.</td>
+                </tr>
+            } @else {
+                @for (tenant of users(); track tenant.id) {
+                    <tr>
+                        <td>{{ tenant.userName }}</td>
+                        <td>{{ tenant.firstName }}</td>
+                        <td>{{ tenant.lastName }}</td>
+                        <td>{{ tenant.phoneNumber }}</td>
+                        <td>
+                            @if (tenant.isActive) {
+                                <span class="badge bg-success">Active</span>
+                            } @else {
+                                <span class="badge bg-danger">Inactive</span>
+                            }
+                        </td>
+                        <td class="text-center">
+                            <div ngbDropdown container="body" class="d-inline-block">
+                                <button 
+                                    class="btn btn-link text-secondary p-0 border-0" 
+                                    type="button"
+                                    ngbDropdownToggle>
+                                    <i class="bi bi-three-dots-vertical fs-5"></i>
+                                </button>
+                                
+                                <div ngbDropdownMenu class="shadow-sm">
+                                    <button ngbDropdownItem>
+                                        <i class="bi bi-pencil me-2"></i> Upgrade
+                                    </button>
+                                    
+                                    <button ngbDropdownItem >
+                                        <i class="bi bi-arrow-repeat me-2"></i>
+                                        {{ tenant.isActive ? 'Deactivate' : 'Activate' }}
+                                    </button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

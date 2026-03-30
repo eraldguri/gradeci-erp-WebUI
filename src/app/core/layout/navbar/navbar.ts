@@ -62,6 +62,10 @@ export class Navbar implements OnInit {
                 child: { label: 'Tenants', route: '/tenants' },
                 condition: () =>  this.menuService.hasReadTenantsPermission(this.permissions())
             },
+			{
+				child: { label: 'Users', route: '/users' },
+				condition: () => this.menuService.hasReadUsersPermission(this.permissions())
+			},
             {
                 child: { label: 'Logout', route: '/logout' },
                 condition: () => true
@@ -80,6 +84,9 @@ export class Navbar implements OnInit {
 			case '/tenants': 
 				this.router.navigate([route]);
 				break;
+			case '/users':
+				this.router.navigate([route]);
+				break;	
 			case '/logout': 
 				this.openLogoutModal();
 				break;
