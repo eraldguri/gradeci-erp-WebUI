@@ -48,6 +48,6 @@ export class AuthService {
 
     logout(): void {
         this.storageService.clear();
-		this.router.navigate(['/login']);
+        window.location.href = '/login';
     }
 }

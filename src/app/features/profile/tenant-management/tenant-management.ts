@@ -7,6 +7,8 @@ import { ApiResponse } from '../../../core/data/ApiResponse';
 import { AddTenantModal } from './add-tenant-modal/add-tenant-modal';
 import { TenantResponse } from '../../../core/data/tenancy/TenantResponse';
 import { ConfirmationModal } from '../../../core/modals/confirmation-modal/confirmation-modal';
+import { LocalStorageService } from '../../../core/services/local-storage.service';
+import { USER_DATA } from '../../../core/data/constants/UserSettingsConstants';
 
 @Component({
   selector: 'app-tenant-management',
@@ -19,11 +21,15 @@ export class TenantManagement {
 	private modalService = inject(NgbModal);
 
 	private toastService = inject(ToastService);
+	private storageService = inject(LocalStorageService);
 
 	tenants = signal<TenantResponse[]>([]);
+	permissions = signal<string[]>([]);
 	isLoading = signal(false);
 
 	ngOnInit(): void {
+		const userData = this.storageService.getItem<CurrentUser>(USER_DATA);
+		this.permissions.set(userData?.permissions ?? []);
 		this.getTenants();
 	}
 

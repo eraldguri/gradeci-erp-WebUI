@@ -5,7 +5,8 @@ interface MenuItem {
     expanded?: boolean;
     children?: ChildItem[];
     route?: string;
-    menuType: 'sidenav' | 'navbar'
+    menuType?: 'sidenav' | 'navbar',
+    order?: number;
 }
 
 interface ChildItem {

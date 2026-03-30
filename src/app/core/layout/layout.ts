@@ -62,7 +62,6 @@ export class Layout implements OnInit {
 		});
 
 		this.storage.setItem(USER_DATA, this.user());
-
 	}
 
 	toggleSidebar() {

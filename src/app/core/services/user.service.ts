@@ -13,7 +13,7 @@ export class UserService {
     updateUser(request: UpdateUser) {
         return this.http.put(`${UPDATE_USER}`, request).pipe(
             tap(response => {
-                console.log(response);
+                // console.log(response);
             })
         );
     }
