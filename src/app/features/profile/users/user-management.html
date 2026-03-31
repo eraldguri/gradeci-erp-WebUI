@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-start mb-3">
-    <button type="button" class="btn btn-primary">Add User</button>
+    <button type="button" class="btn btn-primary" (click)="openRegisterUserDialog()">Add User</button>
 </div>
 
 <div class="table-responsive">
@@ -17,11 +17,11 @@
         <tbody>
             @if (isLoading()) {
                 <tr>
-                    <td colspan="7" class="text-center">Loading tenants...</td>
+                    <td colspan="7" class="text-center">Loading users...</td>
                 </tr>
             } @else if (users().length === 0) {
                 <tr>
-                    <td colspan="7" class="text-center">No tenants found.</td>
+                    <td colspan="7" class="text-center">No users found.</td>
                 </tr>
             } @else {
                 @for (tenant of users(); track tenant.id) {

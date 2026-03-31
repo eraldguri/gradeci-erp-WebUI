@@ -4,15 +4,17 @@ import { ToastService } from '../../../core/widgets/toast/toast.service';
 import { ApiResponse } from '../../../core/data/ApiResponse';
 
 import { NgbDropdownModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AddUserModal } from './add-user-modal/add-user-modal';
 
 @Component({
   selector: 'app-users',
   imports: [NgbDropdownModule],
-  templateUrl: './users.html',
-  styleUrl: './users.scss',
+  templateUrl: './user-management.html',
+  styleUrl: './user-management.scss',
 })
-export class Users implements OnInit {
+export class UserManagement implements OnInit {
 	private userService = inject(UserService);
+	private modalService = inject(NgbModal);
 	private toastService = inject(ToastService);
 
 	users = signal<User[]>([]);
@@ -43,4 +45,19 @@ export class Users implements OnInit {
 			}
 		})
 	}
+
+	openRegisterUserDialog(): void {
+			const modalRef = this.modalService.open(AddUserModal, { centered: true, size: 'lg' });
+	
+			modalRef.result.then(
+				(result) => {
+					if (result === 'confirm') {
+						this.getUsers();
+					}
+				},
+				() => {
+					// dismissed
+				}
+			);
+		}
 }

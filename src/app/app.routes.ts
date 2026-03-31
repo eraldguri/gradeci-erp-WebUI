@@ -39,7 +39,7 @@ export const routes: Routes = [
             },
             {
                 path: 'users',
-                loadComponent: () => import('./features/profile/users/users').then(m => m.Users)
+                loadComponent: () => import('./features/profile/users/user-management').then(m => m.UserManagement)
             }
         ]
     }

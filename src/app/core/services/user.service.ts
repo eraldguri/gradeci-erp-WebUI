@@ -1,9 +1,10 @@
 import { Injectable } from "@angular/core";
-import { ALL_USERS, RESET_PASSWORD, UPDATE_USER } from "../data/constants/ApiConstants";
+import { ALL_USERS, REGISTER_USER, RESET_PASSWORD, UPDATE_USER } from "../data/constants/ApiConstants";
 import { Observable, tap } from "rxjs";
 import { UpdatePassword } from "../data/UpdatePassword";
 import { BaseWebService } from "./base-web.service";
 import { ApiResponse } from "../data/ApiResponse";
+import { RegisterUserRequest } from "../data/users/RegisterUserRequest";
 
 @Injectable({ 
     providedIn: 'root' 
@@ -12,6 +13,10 @@ export class UserService extends BaseWebService {
 
     getAllUsers(): Observable<ApiResponse<User[]>> {
         return this.get<User[]>(ALL_USERS);
+    }
+
+    registerUser(request: RegisterUserRequest): Observable<any> {
+        return this.post(REGISTER_USER, request);
     }
 
     updateUser(request: UpdateUser) {
