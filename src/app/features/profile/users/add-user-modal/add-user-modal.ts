@@ -52,12 +52,23 @@ export class AddUserModal {
 			isActive: raw.isActive ?? false
 		};
 
-		console.log('Registering user with payload:', payload);
 
 		this.userService.registerUser(payload).subscribe({
-			next: () => {
+			next: (res) => {
 				this.toastService.show('User registered successfully.', 'success');
-				this.activeModal.close('confirm');
+
+				//TODO: return new user from backend
+				const newUser: User = {
+					id: res.data ?? '', 
+					firstName: payload.firstName,
+					lastName: payload.lastName,
+					email: payload.email,
+					userName: payload.email,
+					phoneNumber: payload.phoneNumber,
+					isActive: payload.isActive
+				};
+
+				this.activeModal.close(newUser);
 			},
 			error: (error) => {
 				this.toastService.show('Failed to register user.', 'error');

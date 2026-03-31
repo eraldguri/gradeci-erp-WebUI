@@ -23,3 +23,6 @@ export const DEACTIVATE_TENANT = BASE_URL + "Tenants/{tenantId}/deactivate";
 export const UPGRADE_TENANT = BASE_URL + "Tenants/upgrade";
 export const GET_TENANT_BY_ID = BASE_URL + "Tenants/{tenantId}";
 export const GET_TENANTS = BASE_URL + "Tenants/all";
+
+// Roles API
+export const GET_ALL_ROLES = BASE_URL + "Roles/all";

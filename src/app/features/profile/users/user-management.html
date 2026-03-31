@@ -24,14 +24,14 @@
                     <td colspan="7" class="text-center">No users found.</td>
                 </tr>
             } @else {
-                @for (tenant of users(); track tenant.id) {
+                @for (user of users(); track user.id) {
                     <tr>
-                        <td>{{ tenant.userName }}</td>
-                        <td>{{ tenant.firstName }}</td>
-                        <td>{{ tenant.lastName }}</td>
-                        <td>{{ tenant.phoneNumber }}</td>
+                        <td>{{ user.userName }}</td>
+                        <td>{{ user.firstName }}</td>
+                        <td>{{ user.lastName }}</td>
+                        <td>{{ user.phoneNumber }}</td>
                         <td>
-                            @if (tenant.isActive) {
+                            @if (user.isActive) {
                                 <span class="badge bg-success">Active</span>
                             } @else {
                                 <span class="badge bg-danger">Inactive</span>
@@ -47,13 +47,13 @@
                                 </button>
                                 
                                 <div ngbDropdownMenu class="shadow-sm">
-                                    <button ngbDropdownItem>
-                                        <i class="bi bi-pencil me-2"></i> Upgrade
+                                    <button ngbDropdownItem (click)="openViewRolesModal(user.id)">
+                                        <i class="bi bi-pencil me-2"></i> View Roles
                                     </button>
                                     
                                     <button ngbDropdownItem >
                                         <i class="bi bi-arrow-repeat me-2"></i>
-                                        {{ tenant.isActive ? 'Deactivate' : 'Activate' }}
+                                        {{ user.isActive ? 'Deactivate' : 'Activate' }}
                                     </button>
                                 </div>
                             </div>

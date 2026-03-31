@@ -1,0 +1,41 @@
+<div class="modal-header">
+	<h5 class="modal-title">Roles</h5>
+	<button
+		type="button"
+		class="btn-close"
+		aria-label="Close"
+		(click)="activeModal.dismiss('cancel')">
+	</button>
+</div>
+
+<div class="modal-body">
+	<div class="table-responsive">
+		<table class="table table-striped table-hover">
+			<thead class="table-light">
+				<tr>
+					<th scope="col">Role Name</th>
+					<th scope="col">Description</th>
+					<th scope="col">Is Assigned</th>
+				</tr>
+			</thead>
+			<tbody>
+				@for (role of userRoles(); track role.roleId) {
+					<tr>
+						<td>{{ role.name }}</td>
+						<td>{{ role.description }}</td>
+						<td>
+							<span
+								class="badge"
+								[class]="{
+									'bg-success': role.isAssigned,
+									'bg-secondary': !role.isAssigned
+								}">
+								{{ role.isAssigned ? 'Yes' : 'No' }}
+							</span>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+</div>
