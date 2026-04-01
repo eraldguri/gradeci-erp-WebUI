@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { UserService } from '../../../core/services/user.service';
 import { ToastService } from '../../../core/widgets/toast/toast.service';
 import { ApiResponse } from '../../../core/data/ApiResponse';
@@ -7,10 +7,11 @@ import { NgbDropdownModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddUserModal } from './add-user-modal/add-user-modal';
 import { UserStateService } from './services/user-state.service';
 import { UserRolesModal } from './user-roles-modal/user-roles-modal';
+import { TablePagination } from "../../../core/widgets/table-pagination/table-pagination";
 
 @Component({
   selector: 'app-users',
-  imports: [NgbDropdownModule],
+  imports: [NgbDropdownModule, TablePagination],
   templateUrl: './user-management.html',
   styleUrl: './user-management.scss',
 })
@@ -22,6 +23,16 @@ export class UserManagement implements OnInit {
 
 	users = signal<User[]>([]);
 	isLoading = signal(false);
+
+	currentPage = signal(1);
+	pageSize = signal(10);
+
+	paginatedUsers = computed(() => {
+		const startIndex = (this.currentPage() - 1) * this.pageSize();
+		const endIndex = startIndex + this.pageSize();
+		return this.users().slice(startIndex, endIndex);
+	});
+	totalItems = computed(() => this.users().length);
 
 	ngOnInit(): void {
 		this.getUsers();
@@ -85,5 +96,14 @@ export class UserManagement implements OnInit {
 				// dismissed
 			}
 		);
+	}
+
+	onPageChange(newPage: number): void {
+		this.currentPage.set(newPage);
+	}
+
+	updateUsers(newList: User[]): void {
+		this.users.set(newList);
+		this.currentPage.set(1); // Reset to first page when the user list changes
 	}
 }

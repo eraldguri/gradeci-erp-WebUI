@@ -19,12 +19,12 @@
                 <tr>
                     <td colspan="7" class="text-center">Loading users...</td>
                 </tr>
-            } @else if (users().length === 0) {
+            } @else if (paginatedUsers().length === 0) {
                 <tr>
                     <td colspan="7" class="text-center">No users found.</td>
                 </tr>
             } @else {
-                @for (user of users(); track user.id) {
+                @for (user of paginatedUsers(); track user.id) {
                     <tr>
                         <td>{{ user.userName }}</td>
                         <td>{{ user.firstName }}</td>
@@ -63,4 +63,10 @@
             }
         </tbody>
     </table>
+
+    <app-table-pagination 
+        [currentPage]="currentPage()" 
+        [totalPages]="totalItems()" 
+        [pageSize]="pageSize()"
+        (pageChanged)="onPageChange($event)"/>
 </div>

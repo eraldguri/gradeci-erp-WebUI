@@ -30,12 +30,35 @@
       </div>
       <div class="col-md-6">
         <label class="form-label">Password</label>
-        <input type="password" class="form-control" formControlName="password" />
+		<div class="input-wrapper">
+			<input
+				#password 
+				type="password" 
+				class="form-control" 
+				formControlName="password" />
+			<i 
+				class="bi" 
+				[class]="password.type === 'password' ? 'bi-eye-slash' : 'bi-eye'"
+				(click)="password.type = password.type === 'password' ? 'text' : 'password'">
+			</i>
+		</div>
+
       </div>
 
       <div class="col-md-6">
         <label class="form-label">Confirm Password</label>
-        <input type="password" class="form-control" formControlName="confirmPassword" />
+		<div class="input-wrapper">
+			<input
+				#confirmPassword 
+				type="password" 
+				class="form-control" 
+				formControlName="confirmPassword" />
+			<i 
+				class="bi" 
+				[class]="confirmPassword.type === 'password' ? 'bi-eye-slash' : 'bi-eye'"
+				(click)="confirmPassword.type = confirmPassword.type === 'password' ? 'text' : 'password'">
+			</i>
+		</div>
       </div>
 
       <div class="col-12">

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { NgbDropdownModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TenantService } from '../../../core/services/tenant.service';
 import { ToastService } from '../../../core/widgets/toast/toast.service';
@@ -9,10 +9,12 @@ import { TenantResponse } from '../../../core/data/tenancy/TenantResponse';
 import { ConfirmationModal } from '../../../core/modals/confirmation-modal/confirmation-modal';
 import { LocalStorageService } from '../../../core/services/local-storage.service';
 import { USER_DATA } from '../../../core/data/constants/UserSettingsConstants';
+import { TablePagination } from "../../../core/widgets/table-pagination/table-pagination";
+import { TenantStateService } from './services/tenant-state.service';
 
 @Component({
   selector: 'app-tenant-management',
-  imports: [CommonModule, NgbDropdownModule],
+  imports: [CommonModule, NgbDropdownModule, TablePagination],
   templateUrl: './tenant-management.html',
   styleUrl: './tenant-management.scss',
 })
@@ -22,15 +24,30 @@ export class TenantManagement {
 
 	private toastService = inject(ToastService);
 	private storageService = inject(LocalStorageService);
+	private tenantStateService = inject(TenantStateService);
 
 	tenants = signal<TenantResponse[]>([]);
 	permissions = signal<string[]>([]);
 	isLoading = signal(false);
 
+	currentPage = signal(1);
+	pageSize = signal(10);
+
+	paginatedTeanants = computed(() => {
+		const startIndex = (this.currentPage() - 1) * this.pageSize();
+		const endIndex = startIndex + this.pageSize();
+		return this.tenants().slice(startIndex, endIndex);
+	});
+	totalItems = computed(() => this.tenants().length);
+
 	ngOnInit(): void {
 		const userData = this.storageService.getItem<CurrentUser>(USER_DATA);
 		this.permissions.set(userData?.permissions ?? []);
 		this.getTenants();
+
+		this.tenantStateService.tenants$.subscribe(tenants => {
+			this.tenants.set(tenants);
+		});
 	}
 
 	getTenants(): void {
@@ -38,7 +55,7 @@ export class TenantManagement {
 
 		this.tenantService.getTenants().subscribe({
 			next: (response: ApiResponse<TenantResponse[]>) => {
-				this.tenants.set(response?.data ?? []);
+				this.tenantStateService.setTenants(response.data ?? []);
 
 				if (response && response.isSuccessful === false) {
 					this.toastService.show('Failed to load tenants.', 'error');
@@ -59,9 +76,10 @@ export class TenantManagement {
 		const modalRef = this.modalService.open(AddTenantModal, { centered: true, size: 'lg' });
 
 		modalRef.result.then(
-			(result) => {
-				if (result === 'confirm') {
-					this.getTenants();
+			(newTenant) => {
+				if (newTenant) {
+					this.tenantStateService.addTenant(newTenant);
+					// this.toastService.show('Tenant added successfully');
 				}
 			},
 			() => {
@@ -96,7 +114,7 @@ export class TenantManagement {
 			next: (response: ApiResponse<string>) => {
 				if (response && response.isSuccessful) {
 					this.toastService.show(`Tenant ${tenant.name} activated successfully`);
-					this.getTenants();
+					this.tenantStateService.updateTenant({ ...tenant, isActive: true });
 				} else {
 					console.log(response.messages);
 				}
@@ -113,7 +131,7 @@ export class TenantManagement {
 			next: (response: ApiResponse<string>) => {
 				if (response && response.isSuccessful) {
 					this.toastService.show(`Tenant ${tenant.name} deactivated successfully`);
-					this.getTenants();
+					this.tenantStateService.updateTenant({ ...tenant, isActive: false });
 				} else {
 					console.log(response.messages);
 				}
@@ -123,6 +141,15 @@ export class TenantManagement {
 				console.log(error);
 			}
 		});
+	}
+
+	onPageChange(newPage: number): void {
+		this.currentPage.set(newPage);
+	}
+
+	updateTenants(newList: TenantResponse[]): void {
+		this.tenants.set(newList);
+		this.currentPage.set(1); // Reset to first page when the tenant list changes
 	}
 
 }

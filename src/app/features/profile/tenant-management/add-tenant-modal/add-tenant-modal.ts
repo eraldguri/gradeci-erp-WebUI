@@ -57,9 +57,23 @@ export class AddTenantModal {
 		};
 
 		this.tenantService.addTenant(payload).subscribe({
-			next: () => {
+			next: (response) => {
+				
+				//TODO: ideally backend should return the created tenant, but for now we can construct it here
+				const newTenant = {
+					id: response.data ?? '', // using returned id or empty string if not provided
+					identifier: payload.identifier,
+					name: payload.name,
+					connectionString: payload.connectionString,
+					email: payload.email,
+					firstName: payload.firstName,
+					lastName: payload.lastName,
+					validUpTo: payload.validUpTo,
+					isActive: payload.isActive
+				};
+
 				this.toastService.show('Tenant added successfully!', 'success');
-				this.activeModal.close('confirm');
+				this.activeModal.close(newTenant);
 			},
 			error: (err) => {
 				console.error('Failed to add tenant', err);

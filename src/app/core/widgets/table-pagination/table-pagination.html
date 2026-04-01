@@ -1,0 +1,32 @@
+@if (this.getTotalPages() > 1) {
+	<div class="d-flex justify-content-between align-items-center mt-3 px-2">
+		<div class="entries-info">
+			Showing <b>{{ (currentPage - 1) * pageSize + 1 }}</b>
+			to <b>{{ Math.min(currentPage * pageSize, totalPages) }}</b>
+			of <b>{{ totalPages }}</b> entries
+		</div>
+
+		<nav aria-label="Table Pagination">
+			<ul class="pagination pagination-sm mb-0 d-flex">
+				<li class="page-item" [class.disabled]="currentPage === 1">
+					<button class="page-link shadow-none" (click)="changePage(currentPage - 1)">
+						<i class="bi bi-chevron-left"></i>
+					</button>
+				</li>
+
+				@for (page of pages; track $index) {
+					<li class="page-item" [class.active]="currentPage === page">
+						<button class="page-link shadow-none" (click)="changePage(page)">{{ page }}</button>
+					</li>
+				}
+
+				<li class="page-item" [class.disabled]="currentPage === getTotalPages()">
+					<button class="page-link shadow-none" (click)="changePage(currentPage + 1)">
+						<i class="bi bi-chevron-right"></i>
+					</button>
+				</li>
+
+			</ul>
+		</nav>
+	</div>
+}

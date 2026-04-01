@@ -1,0 +1,23 @@
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrapper .form-control {
+  padding-right: 40px; /* Prevents text from going under the icon */
+}
+
+.input-wrapper i {
+  position: absolute;
+  right: 12px;
+  cursor: pointer;
+  color: #6c757d; /* Muted gray color */
+  z-index: 10;
+  font-size: 1.1rem;
+}
+
+/* Optional: Add a hover effect for the icon */
+.input-wrapper i:hover {
+  color: #333;
+}

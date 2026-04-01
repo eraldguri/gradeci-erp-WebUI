@@ -20,12 +20,12 @@
                 <tr>
                     <td colspan="7" class="text-center">Loading tenants...</td>
                 </tr>
-            } @else if (tenants().length === 0) {
+            } @else if (paginatedTeanants().length === 0) {
                 <tr>
                     <td colspan="7" class="text-center">No tenants found.</td>
                 </tr>
             } @else {
-                @for (tenant of tenants(); track tenant.identifier) {
+                @for (tenant of paginatedTeanants(); track tenant.identifier) {
                     <tr>
                         <td>{{ tenant.name }}</td>
                         <td>{{ tenant.email }}</td>
@@ -65,4 +65,10 @@
             }
         </tbody>
     </table>
+
+    <app-table-pagination 
+        [currentPage]="currentPage()" 
+        [totalPages]="totalItems()" 
+        [pageSize]="pageSize()"
+        (pageChanged)="onPageChange($event)"/>
 </div>

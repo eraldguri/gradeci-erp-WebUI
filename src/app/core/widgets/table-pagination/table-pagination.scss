@@ -1,0 +1,142 @@
+/* Pagination Container */
+.pagination {
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+}
+
+.page-item {
+    list-style: none;
+}
+
+.page-link {
+    border: none;
+    border-radius: 10px;
+    color: #2c569e;
+    padding: 8px 14px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 38px;
+    line-height: 1;
+}
+
+/* Hover Effects */
+.page-item:not(.active) .page-link:hover {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    color: #1e293b;
+    transform: translateY(-1px);
+}
+
+.page-item:not(.active) .page-link:active {
+    transform: translateY(0);
+}
+
+/* Active Page */
+.page-item.active .page-link {
+    background: linear-gradient(135deg, #5a67d8 0%, #4c51bf 100%);
+    color: white;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(90, 103, 216, 0.35), 0 1px 2px rgba(0, 0, 0, 0.05);
+    position: relative;
+}
+
+.page-item.active .page-link::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 10px;
+    background: radial-gradient(circle at 30% 20%, rgba(99, 113, 215, 0.2), transparent);
+    pointer-events: none;
+}
+
+/* Disabled State */
+.page-item.disabled .page-link {
+    background-color: transparent;
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.page-item.disabled .page-link:hover {
+    background: transparent;
+    transform: none;
+}
+
+/* Entries Info Styling */
+.entries-info {
+    font-size: 0.875rem;
+    color: #64748b;
+    background: #f8fafc;
+    padding: 6px 14px;
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+.entries-info b {
+    color: #1e293b;
+    font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .pagination {
+        gap: 4px;
+    }
+    
+    .page-link {
+        padding: 6px 10px;
+        min-width: 32px;
+        font-size: 0.8125rem;
+    }
+    
+    .entries-info {
+        font-size: 0.75rem;
+        padding: 4px 10px;
+    }
+}
+
+/* Optional: Add focus styles for accessibility */
+.page-link:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(90, 103, 216, 0.3);
+    z-index: 1;
+}
+
+/* Optional: Add animation for page changes */
+.page-item {
+    animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Optional: Add tooltip style on hover for disabled */
+.page-item.disabled .page-link {
+    position: relative;
+}
+
+/* Optional: Quick page indicator for many pages */
+.page-item:first-child .page-link,
+.page-item:last-child .page-link {
+    font-weight: 600;
+    background: #f8fafc;
+}
+
+.page-item:first-child .page-link:hover,
+.page-item:last-child .page-link:hover {
+    background: #e2e8f0;
+}
