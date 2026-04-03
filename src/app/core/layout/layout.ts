@@ -39,29 +39,11 @@ export class Layout implements OnInit {
 	}
 	
 	getUsetData() {
-		const userPrefs = this.storage.getItem<UserData>(USER_PREFS);
+		const userPrefs = this.storage.getItem<CurrentUser>(USER_DATA);
 
-		if (!userPrefs?.jwt) {
-			this.router.navigate(['/login']);
-			return;
+		if (userPrefs) {
+			this.user.set(userPrefs);
 		}
-
-		const token = this.authService.decodeToken<JwtPayload>(userPrefs.jwt);
-
-		if (!token) return;
-
-		this.user.set({
-			id: token[NAME_IDENTIFIER],
-			name: token[NAME],
-			surname: token[SURNAME],
-			email: token[EMAIL_ADDRESS],
-			mobile: token[MOBILE_PHONE],
-			role: token[ROLE],
-			tenant: token.tenant,
-			permissions: token.permission
-		});
-
-		this.storage.setItem(USER_DATA, this.user());
 	}
 
 	toggleSidebar() {

@@ -1,11 +1,10 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { inject, Injectable, signal } from "@angular/core";
 import { jwtDecode } from "jwt-decode";
-import { tap } from "rxjs";
 import { LocalStorageService } from "./local-storage.service";
-import { USER_PREFS } from "../data/constants/UserSettingsConstants";
-import { Router } from "@angular/router";
+import { AUTH_TOKEN, USER_PREFS } from "../data/constants/UserSettingsConstants";
 import { LOGIN } from "../data/constants/ApiConstants";
+import { ApiResponse } from "../data/ApiResponse";
 
 @Injectable({ 
     providedIn: 'root' 
@@ -13,9 +12,6 @@ import { LOGIN } from "../data/constants/ApiConstants";
 export class AuthService {
     private http = inject(HttpClient);
     private storageService = inject(LocalStorageService);
-    private router = inject(Router);
-
-    currentUser = signal<LoginResponse | null>(null);
 
     login(tenant: string, request: LoginRequest) {
         const headers = new HttpHeaders({
@@ -23,11 +19,7 @@ export class AuthService {
             'tenant': tenant
         });
 
-        return this.http.post<LoginResponse>(`${LOGIN}`, request, { headers: headers }).pipe(
-            tap(user => {
-                this.currentUser.set(user);
-            })
-        );
+        return this.http.post<ApiResponse<LoginResponse>>(`${LOGIN}`, request, { headers: headers });
     }
 
     decodeToken<T = any>(token: string): T | null {
@@ -40,7 +32,7 @@ export class AuthService {
     }
 
     isLoggedIn(): boolean {
-        if (!this.storageService.getItem(USER_PREFS)) {
+        if (!this.storageService.getItem(AUTH_TOKEN)) {
             return false;
         }
         return true;

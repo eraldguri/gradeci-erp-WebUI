@@ -1,7 +1,7 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { LocalStorageService } from '../services/local-storage.service';
-import { USER_PREFS } from '../data/constants/UserSettingsConstants';
+import { AUTH_TOKEN, USER_DATA, USER_PREFS } from '../data/constants/UserSettingsConstants';
 import { LOGIN } from '../data/constants/ApiConstants';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
@@ -11,8 +11,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 		return next(req);
 	}
 
-	const userPrefs = storageService.getItem<UserData>(USER_PREFS);
-	const token = userPrefs?.jwt;
+	const token = storageService.getItem<string>(AUTH_TOKEN);
 
 	if (token) {
 		const cloned = req.clone({

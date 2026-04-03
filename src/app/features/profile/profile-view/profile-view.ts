@@ -1,9 +1,8 @@
 import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from "@angular/forms";
 import { LocalStorageService } from '../../../core/services/local-storage.service';
-import { USER_PREFS } from '../../../core/data/constants/UserSettingsConstants';
+import { USER_DATA } from '../../../core/data/constants/UserSettingsConstants';
 import { AuthService } from '../../../core/services/auth.service';
-import { EMAIL_ADDRESS, JwtPayload, MOBILE_PHONE, NAME, NAME_IDENTIFIER, ROLE, SURNAME } from '../../../core/data/JwtPayload';
 import { UserService } from '../../../core/services/user.service';
 import { ToastService } from '../../../core/widgets/toast/toast.service';
 import { CountryService } from '../../../core/services/country.service';
@@ -38,33 +37,19 @@ export class ProfileView implements OnInit {
 	isLoading = computed(() => this.countries.length === 0);
 
 	ngOnInit(): void {
-		const userPrefs = this.storageService.getItem<UserData>(USER_PREFS);
-		const token = this.authService.decodeToken<JwtPayload>(userPrefs!.jwt);
+		const user = this.storageService.getItem<CurrentUser>(USER_DATA);
 
-		if (!userPrefs?.jwt) return;
+		if (user) { 
+			this.userData.set(user);
 
-		if (!token) return;
+			this.userForm.patchValue({
+				firstName: user.name,
+				lastName: user.surname,
+				email: user.email,
+				phoneNumber: user.mobile
+			});
+		}
 
-		const user: CurrentUser = {
-			id: token[NAME_IDENTIFIER],
-			name: token[NAME],
-			surname: token[SURNAME],
-			email: token[EMAIL_ADDRESS],
-			mobile: token[MOBILE_PHONE],
-			role: token[ROLE],
-			tenant: token.tenant,
-			permissions: token.permission
-		};
-
-		this.userData.set(user);
-
-		this.userForm.patchValue({
-			firstName: user.name,
-			lastName: user.surname,
-			email: user.email,
-			phoneNumber: user.mobile
-		});
-		
 	}
 
 	onSubmit() {

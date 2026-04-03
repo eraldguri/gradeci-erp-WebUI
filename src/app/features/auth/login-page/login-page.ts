@@ -3,7 +3,8 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
 import { Router } from '@angular/router';
 import { LocalStorageService } from '../../../core/services/local-storage.service';
-import { USER_PREFS } from '../../../core/data/constants/UserSettingsConstants';
+import { AUTH_TOKEN, USER_DATA, USER_PREFS } from '../../../core/data/constants/UserSettingsConstants';
+import { EMAIL_ADDRESS, JwtPayload, MOBILE_PHONE, NAME, NAME_IDENTIFIER, ROLE, SURNAME } from '../../../core/data/JwtPayload';
 
 @Component({
   selector: 'app-login-page',
@@ -25,7 +26,7 @@ export class LoginPage {
 		username: ['', Validators.required],
 		password: ['', Validators.required]
 	});
-
+	user = signal<CurrentUser | null>(null);
 
 	onSubmit() {
 		if (this.loginForm.invalid) return;
@@ -48,10 +49,25 @@ export class LoginPage {
 			next: (response) => {
 				if (response.isSuccessful) {
 
-					this.storage.setItem(USER_PREFS, response.data);
-					
-					this.isLoading.set(false);
-					this.router.navigate(['/dashboard']);
+					const token = this.authService.decodeToken<JwtPayload>(response.data.jwt);
+					this.user.set({
+						id: token?.[NAME_IDENTIFIER] || '',
+						name: token?.[NAME] || '',
+						surname: token?.[SURNAME] || '',
+						email: token?.[EMAIL_ADDRESS] || '',
+						mobile: token?.[MOBILE_PHONE] || '',
+						role: token?.[ROLE] || '',
+						tenant: token?.tenant || '',
+						permissions: token?.permission || []
+					});
+
+					this.storage.setItem(AUTH_TOKEN, response.data.jwt);
+					this.storage.setItem(USER_DATA, this.user());
+
+					setTimeout(() => {
+						this.isLoading.set(false);
+						this.router.navigate(['/dashboard']);
+					}, 3000);
 				}
 			},
 			error: (error) => {
