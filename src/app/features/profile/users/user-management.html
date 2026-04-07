@@ -51,7 +51,7 @@
                                         <i class="bi bi-pencil me-2"></i> View Roles
                                     </button>
                                     
-                                    <button ngbDropdownItem >
+                                    <button ngbDropdownItem (click)="openActivateOrDeactivateUserDialog(user)">
                                         <i class="bi bi-arrow-repeat me-2"></i>
                                         {{ user.isActive ? 'Deactivate' : 'Activate' }}
                                     </button>

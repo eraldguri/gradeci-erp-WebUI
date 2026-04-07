@@ -8,6 +8,7 @@ import { AddUserModal } from './add-user-modal/add-user-modal';
 import { UserStateService } from './services/user-state.service';
 import { UserRolesModal } from './user-roles-modal/user-roles-modal';
 import { TablePagination } from "../../../core/widgets/table-pagination/table-pagination";
+import { ConfirmationModal } from '../../../core/modals/confirmation-modal/confirmation-modal';
 
 @Component({
   selector: 'app-users',
@@ -96,6 +97,38 @@ export class UserManagement implements OnInit {
 				// dismissed
 			}
 		);
+	}
+
+	openActivateOrDeactivateUserDialog(user: User): void {
+		const action = user.isActive ? 'Deactivate' : 'Activate';
+		const modalRef = this.modalService.open(ConfirmationModal, { centered: true });
+
+		modalRef.componentInstance.title = `${action} User`;
+		modalRef.componentInstance.description = `Are you sure you want to ${action.toLowerCase()} ${user.firstName} ${user.lastName}?`;
+		modalRef.componentInstance.confirmButtonText = action;
+		modalRef.componentInstance.confirmButtonClass = user.isActive ? 'btn-danger' : 'btn-success';
+
+		modalRef.result.then((result => {
+			if (result === 'confirm') {
+				this.activateOrDeactivateUser(user.id, !user.isActive);
+			}
+
+		})).catch(() => {});
+	}
+
+	activateOrDeactivateUser(userId: string, status: boolean): void {
+		this.userService.updateStatus(userId, status).subscribe({
+			next: (response: ApiResponse<string>) => {
+				if (response && response.isSuccessful) {
+					this.toastService.show(`User ${status ? 'activated' : 'deactivated'} successfully`);
+					this.userStateService.updateUser({ id: userId, isActive: status } as User);
+				} else {
+					this.toastService.show(`Failed to ${status ? 'activate' : 'deactivate'} user. Please try again later.`, 'error');
+				}
+			}, error: (error) => {
+				this.toastService.show(`Failed to ${status ? 'activate' : 'deactivate'} user. Please try again later.`, 'error');
+			}
+		});
 	}
 
 	onPageChange(newPage: number): void {

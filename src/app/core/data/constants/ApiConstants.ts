@@ -5,9 +5,9 @@ export const LOGIN = BASE_URL + "Token/login";
 // Users API
 export const REGISTER_USER = BASE_URL + "Users/register";
 export const UPDATE_USER = BASE_URL + "Users/update";
-export const UPDATE_STATUS = BASE_URL + "update-status";
-export const UPDATE_ROLES = BASE_URL + "update-roles/{roleId}";
-export const DELETE_USER = BASE_URL + "delete/{userId}";
+export const UPDATE_STATUS = BASE_URL + "Users/update-status";
+export const UPDATE_ROLES = BASE_URL + "Users/update-roles/{roleId}";
+export const DELETE_USER = BASE_URL + "Users/delete/{userId}";
 export const ALL_USERS = BASE_URL + "Users/all";
 export const USER_BY_ID = BASE_URL + "Users/{userId}";
 export const USER_PERMISSIONS_BY_ID = BASE_URL + "Users/permissions/{userId}";
