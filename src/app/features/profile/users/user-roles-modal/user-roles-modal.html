@@ -15,7 +15,7 @@
 				<tr>
 					<th scope="col">Role Name</th>
 					<th scope="col">Description</th>
-					<th scope="col">Is Assigned</th>
+					<th scope="col" class="text-center">Is Assigned</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -23,19 +23,29 @@
 					<tr>
 						<td>{{ role.name }}</td>
 						<td>{{ role.description }}</td>
-						<td>
-							<span
-								class="badge"
-								[class]="{
-									'bg-success': role.isAssigned,
-									'bg-secondary': !role.isAssigned
-								}">
-								{{ role.isAssigned ? 'Yes' : 'No' }}
-							</span>
+						<td class="text-center align-middle">
+							<label class="switch m-0">
+								<input
+									type="checkbox"
+									[checked]="role.isAssigned"
+									(change)="onToggle(role, $event.target.checked)" />
+								<span class="slider"></span>
+							</label>
 						</td>
 					</tr>
 				}
 			</tbody>
 		</table>
 	</div>
+</div>
+
+<div class="modal-footer">
+	<button
+		type="button"
+		class="btn btn-primary"
+		[disabled]="!hasChanges"
+		(click)="onSave()">
+		Save Changes
+	</button>
+
 </div>

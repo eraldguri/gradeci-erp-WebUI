@@ -1,0 +1,41 @@
+.switch {
+	position: relative;
+	display: inline-block;
+	width: 42px;
+	height: 24px;
+}
+
+.switch input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.slider {
+	position: absolute;
+	cursor: pointer;
+	inset: 0;
+	background-color: #ccc;
+	transition: all 0.3s ease;
+	border-radius: 34px;
+}
+
+.slider::before {
+	content: "";
+	position: absolute;
+	height: 18px;
+	width: 18px;
+	left: 3px;
+	bottom: 3px;
+	background-color: white;
+	transition: all 0.3s ease;
+	border-radius: 50%;
+}
+
+input:checked + .slider {
+	background-color: #198754; /* Bootstrap success */
+}
+
+input:checked + .slider::before {
+	transform: translateX(18px);
+}

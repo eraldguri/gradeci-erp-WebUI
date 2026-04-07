@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { ALL_USERS, REGISTER_USER, RESET_PASSWORD, UPDATE_STATUS, UPDATE_USER, USER_ROLES_BY_USER_ID } from "../data/constants/ApiConstants";
+import { ALL_USERS, REGISTER_USER, RESET_PASSWORD, UPDATE_ROLES, UPDATE_STATUS, UPDATE_USER, USER_ROLES_BY_USER_ID } from "../data/constants/ApiConstants";
 import { Observable, tap } from "rxjs";
 import { UpdatePassword } from "../data/UpdatePassword";
 import { BaseWebService } from "./base-web.service";
@@ -37,5 +37,9 @@ export class UserService extends BaseWebService {
 
     updateStatus(userId: string, status: boolean): Observable<ApiResponse<string>> {
         return this.http.put<ApiResponse<string>>(UPDATE_STATUS, { userId, status });
+    }
+
+    updateUserRoles(userId: string, request: UpdateUserRoles): Observable<ApiResponse<string>> {
+        return this.http.put<ApiResponse<string>>(`${UPDATE_ROLES.replace('{userId}', userId)}`, request);
     }
 }
