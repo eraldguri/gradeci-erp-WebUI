@@ -26,3 +26,8 @@ export const GET_TENANTS = BASE_URL + "Tenants/all";
 
 // Roles API
 export const GET_ALL_ROLES = BASE_URL + "Roles/all";
+export const UPDATE_ROLE = BASE_URL + "Roles/update";
+export const GET_ROLE_BY_PARTIAL_ID = BASE_URL + "Roles/partial";
+export const GET_ROLE_BY_FULL_ID = BASE_URL + "Roles/full";
+export const DELETE_ROLE = BASE_URL + "Roles/delete";
+export const UPDATE_PERMISSIONS = BASE_URL + "Roles/update-permissions";

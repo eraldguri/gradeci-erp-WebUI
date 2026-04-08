@@ -40,6 +40,10 @@ export const routes: Routes = [
             {
                 path: 'users',
                 loadComponent: () => import('./features/profile/users/user-management').then(m => m.UserManagement)
+            },
+            {
+                path: 'roles',
+                loadComponent: () => import('./features/profile/role-management/role-management').then(m => m.RoleManagement)
             }
         ]
     }

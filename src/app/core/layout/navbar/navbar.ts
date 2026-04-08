@@ -66,6 +66,10 @@ export class Navbar implements OnInit {
 				child: { label: 'Users', route: '/users' },
 				condition: () => this.menuService.hasReadUsersPermission(this.permissions())
 			},
+			{
+				child: { label: 'Roles', route: '/roles' },
+				condition: () => this.menuService.hasReadRolesPermission(this.permissions())
+			},
             {
                 child: { label: 'Logout', route: '/logout' },
                 condition: () => true
@@ -74,23 +78,9 @@ export class Navbar implements OnInit {
     }
 
 	onUserDropdownItemClick(route: string) {
-		switch (route) {
-			case '/profile' : 
-				this.router.navigate([route]);
-				break;
-			case '/security': 
-				this.router.navigate([route]);
-				break;
-			case '/tenants': 
-				this.router.navigate([route]);
-				break;
-			case '/users':
-				this.router.navigate([route]);
-				break;	
-			case '/logout': 
-				this.openLogoutModal();
-				break;
-		}
+		route === '/logout' 
+		? this.openLogoutModal() 
+		: this.router.navigate([route]);
 	}
 
 	openLogoutModal(): void {

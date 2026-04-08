@@ -1,0 +1,10 @@
+/* Add to your component's CSS/SCSS */
+.dropdown-toggle::after {
+    display: none !important; /* Removes the caret/arrow */
+}
+
+/* Optional: add a circular hover effect */
+.btn-link:hover {
+    background-color: rgba(0,0,0,0.05);
+    border-radius: 50%;
+}
