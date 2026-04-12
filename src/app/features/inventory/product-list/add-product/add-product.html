@@ -1,0 +1,98 @@
+<div class="container-fluid p-2">
+	<div class="d-flex align-items-center gap-3 mb-4">
+
+		<button type="button"
+				class="btn btn-link text-decoration-none p-0 flex-shrink-0"
+				(click)="onBackClick()">
+			<i class="bi bi-arrow-left me-2"></i>
+			Add New Product
+		</button>
+
+		<input type="text"
+				class="form-control flex-grow-1"
+				placeholder="Enter product name">
+
+		</div>
+
+	<div class="row g-4">
+		
+		<div class="col-lg-8">
+			
+			<div class="form-row d-flex align-items-center gap-3 mb-4">
+
+				<label class="flex-shrink-0">Product Type</label>
+
+				<div class="d-flex align-items-center gap-3">
+
+					@for (type of productTypes(); track type.id) {
+						<div class="form-check-0">
+
+							<input type="radio"
+								class="form-chekc-input"
+								[id]="type.id"
+								[checked]="selectedProductType() === type.id"
+								(click)="setProductType(type.id)">
+						</div>
+
+						<label class="form-check-label" [for]="type.id">
+							{{ type.label }}
+						</label>
+					}
+
+				</div>
+
+			</div>
+
+			<ul class="nav nav-tabs custom-tabs border-bottom-0">
+				@for (tab of tabs(); track tab) {
+					<li class="nav-item">
+						<button
+							class="nav-link d-flex align-items-center gap-2 px-4 py-3"
+							[class.active]="activeTabId() === tab.id"
+							(click)="setActiveTab(tab.id)">
+							<span>{{ tab.label }}</span>
+						</button>
+					</li>
+				}
+			</ul>
+
+			@switch (activeTabId()) {
+				@case ('general') {
+					<app-add-product-general-information-tab/>
+				}
+				@case ('variants') {
+					<app-add-product-attributes-and-variants-tab/>
+				}
+				@case ('prices') {
+					<app-add-product-prices-tab/>
+				}
+				@case ('purchase') {
+					<app-add-product-purchase-tab/>
+				}
+			}
+		</div>
+		
+		<div class="col-lg-4">
+			<div class="card border-0 shadow-sm mb-4 p-4">
+				<h5 class="mb-3">Product Image</h5>
+
+				<div class="d-flex flex-column align-items-center gap-3">
+					<div class="upload-box d-flex align-items-center justify-content-center mb-3">
+						<span class="text-muted">Image Preview</span>
+					</div>
+					
+					<input class="form-control mb-3" type="file">
+					
+					<div class="d-flex gap-2">
+						<div class="thumb"></div>
+						<div class="thumb"></div>
+						<div class="thumb"></div>
+						<div class="thumb add"></div>
+					</div>
+				</div>	
+			</div>
+		</div>
+
+	</div>
+		
+</div>

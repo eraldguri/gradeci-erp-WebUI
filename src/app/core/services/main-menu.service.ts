@@ -28,68 +28,14 @@ export class MainMenuService {
         });
 
         this.addMenuItem({
-            label: 'Accounts',
-            route: '/accounts',
+            label: 'Inventory',
+            route: '/inventory',
             icon: 'bi-cart',
             menuType: 'sidenav',
             order: 2,
             children: [
-                { label: 'Create Account', route: '/accounts/create-account' },
-                { label: 'View Accounts', route: '/accounts/view-accounts' },
-                { label: 'Import Accounts' }
-            ]
-        });
-
-        // Add Contacts menu with condition
-        this.addMenuItem({
-            label: 'Contacts',
-            icon: 'bi-box',
-            route: '/products',
-            menuType: 'sidenav',
-            order: 3,
-            children: [
-                { label: 'Create Contact', route: '/products/lists' },
-                { label: 'View Contacts', route: '/products/warehouses' },
-                { label: 'Import Contacts', route: '/products/inventories' },
-            ]
-        });
-
-        // Add Opportunities menu
-        this.addMenuItem({
-            label: 'Opportunities',
-            icon: 'bi bi-emoji-sunglasses-fill',
-            menuType: 'sidenav',
-            order: 4,
-            children: [
-                { label: 'Create Opportunity' },
-                { label: 'View Opportunities' },
-                { label: 'Import Opportunities' }
-            ]
-        });
-
-        // Add Leads menu with condition
-        this.addMenuItem({
-            label: 'Leads',
-            icon: 'bi bi-grid-3x3-gap-fill',
-            menuType: 'sidenav',
-            order: 5,
-            children: [
-                { label: 'Create Lead' },
-                { label: 'View Leads' },
-                { label: 'Import Leads' }
-            ]
-        });
-
-        // Add Quote menu
-        this.addMenuItem({
-            label: 'Quote',
-            icon: 'bi bi-grid-3x3-gap-fill',
-            menuType: 'sidenav',
-            order: 6,
-            children: [
-                { label: 'Create Quote' },
-                { label: 'View Quotes' },
-                { label: 'Import Quotes' }
+                { label: 'Products', route: '/inventory/product-list' },
+                { label: 'Configurations', route: '/inventory/product-configurations' }
             ]
         });
 

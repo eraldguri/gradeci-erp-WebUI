@@ -1,0 +1,24 @@
+<div class="container-fluid p-3 bg-white border-bottom">
+    <div class="d-flex justifyc-content-between align-items-center flex-wrap gap-3">
+        <div class="d-flex flex-wrap gap-2">
+            <button type="button" class="btn btn-primary" (click)="onAddProductClick()">
+                <i class="bi bi-plus-circle me-1"></i> Add Product
+            </button>
+            <button type="button" class="btn btn-outline-secondary">
+                <i class="bi bi-upload me-1"></i> Import
+            </button>
+            <button type="button" class="btn btn-outline-secondary">
+                <i class="bi bi-download me-1"></i> Export
+            </button>
+        </div>
+
+        <div class="w-100 w-lg-auto" style="max-width: 400px;">
+            <div class="input-group">
+                <span class="input-group-text bg-white border-end-0">
+                    <i class="bi bi-search"></i>
+                </span>
+                <input type="text" class="form-control border-start-0" placeholder="Search products...">
+            </div>
+        </div>
+    </div>
+</div>
