@@ -1,0 +1,123 @@
+<div class="modal-header">
+    <h5 class="modal-title">Add Product Category</h5>
+    <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="activeModal.dismiss('cancel')">
+    </button>
+</div>
+
+<div class="modal-body">
+    <form>
+        <div class="mb-2">
+            <label for="categoryName" class="form-label">Category Name</label>
+            <input type="text" class="form-control" id="categoryName" placeholder="Enter category name">
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-2">
+                    <label for="parentCategory" class="form-label">Parent Category</label>
+                    <select class="form-control" id="parentCategory">
+                        <option value="">Select Parent Category</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-2">
+                    <label for="avataxCategory" class="form-label">Avatax Category</label>
+                    <select class="form-control" id="avataxCategory">
+                        <option value="">Select Avatax Category</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div>
+                    <span class="fw-semibold">LOGISTICS</span>
+                    <hr class="my-1">
+                </div>
+
+                <div class="mb-2">
+                    <label for="parentCategory" class="form-label">Force Removal Strategy</label>
+                    <select class="form-control" id="parentCategory">
+                        <option value="">Select Parent Category</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div>
+                    <span class="fw-semibold">INVENTORY EVALUATION</span>
+                    <hr class="my-1">
+                </div>
+
+                <div class="mb-2">
+                    <label for="parentCategory" class="form-label">Costing Method</label>
+                    <select class="form-control" id="parentCategory">
+                        <option value="">Select Parent Category</option>
+                    </select>
+                </div>
+
+                <div class="mb-2">
+                    <label for="parentCategory" class="form-label">Inventory Valuation</label>
+                    <select class="form-control" id="parentCategory">
+                        <option value="">Select Parent Category</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <span class="fw-semibold">ACCOUNT PROPERTIES</span>
+            <hr class="my-1">
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+
+                <div class="mb-2">
+                    <label for="parentCategory" class="form-label">Income Account</label>
+                    <select class="form-control" id="parentCategory">
+                        <option value="">Select Parent Category</option>
+                    </select>
+                </div>
+
+                <div class="mb-2">
+                    <label for="parentCategory" class="form-label">Expense Account</label>
+                    <select class="form-control" id="parentCategory">
+                        <option value="">Select Parent Category</option>
+                    </select>
+                </div>
+
+            </div>
+
+             <div class="col-md-6">
+
+                <div class="mb-2">
+                    <label for="parentCategory" class="form-label">Stock Account</label>
+                    <select class="form-control" id="parentCategory">
+                        <option value="">Select Parent Category</option>
+                    </select>
+                </div>
+
+                <div class="mb-2">
+                    <label for="parentCategory" class="form-label">Stock Variation</label>
+                    <select class="form-control" id="parentCategory">
+                        <option value="">Select Parent Category</option>
+                    </select>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" (click)="activeModal.close('save')">Save</button>
+            <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss('cancel')">Cancel</button>
+        </div>
+
+    </form>
+</div>

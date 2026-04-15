@@ -1,1 +1,30 @@
-<p>product-config works!</p>
+<ul class="nav nav-tabs custom-tabs border-bottom-0">
+    @for (tab of tabs(); track tab.id) {
+        <li class="nav-item">
+            <button
+                class="nav-link d-flex align-items-center gap-2 px-4 py-2"
+                [class.active]="activeTab() === tab.id"
+                (click)="setActiveTab(tab)">
+                <span>{{ tab.label }}</span>
+            </button>
+        </li>
+    }
+</ul>
+
+@switch (activeTab()) {
+    @case ('warehouses') {
+        <app-product-config-warehouses-tab/>
+    }
+    @case ('operation-types') {
+        <app-product-config-operation-types-tab/>
+    }
+    @case ('categories') {
+        <app-product-config-categories-tab/>
+    }
+    @case ('attributes') {
+        <app-product-config-attributes-tab/>
+    }
+    @case('delivery-methods') {
+        <app-product-config-delivery-methods-tab/>
+    }
+}

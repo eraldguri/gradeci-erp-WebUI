@@ -2,3 +2,16 @@
 
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
+
+.custom-tabs .nav-link {
+  border: none;
+  border-bottom: 3px solid transparent;
+  color: #495057;
+  transition: all 0.3s ease;
+}
+
+.custom-tabs .nav-link.active {
+  background: transparent;
+  border-bottom-color: #0d6efd;
+  color: #0d6efd;
+}
