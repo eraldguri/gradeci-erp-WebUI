@@ -14,22 +14,22 @@
 
 		<div class="dropdown" ngbDropdown>
 
-		<button class="btn btn-light dropdown-toggle" ngbDropdownToggle type="button">
-			{{ userData?.name }}
-		</button>
+			<button class="btn btn-light dropdown-toggle" ngbDropdownToggle type="button">
+				{{ userData?.name }}
+			</button>
 
-		<ul class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
-			@for (item of menuItems(); track $index) {
-				@if (item.menuType === 'navbar') {
-					@for (child of item.children; track $index) {
-						<li>
-							<a class="dropdown-item" style="cursor: pointer;" (click)="onUserDropdownItemClick(child.route ?? '')">{{child.label}}</a>
-						</li>
+			<ul class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
+				@for (item of menuItems(); track $index) {
+					@if (item.menuType === 'navbar') {
+						@for (child of item.children; track $index) {
+							<li>
+								<a class="dropdown-item" style="cursor: pointer;" (click)="onUserDropdownItemClick(child.route ?? '')">{{child.label}}</a>
+							</li>
+						}
+						
 					}
-					
 				}
-			}
-		</ul>
+			</ul>
 
 		</div>
 	</div>

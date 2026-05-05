@@ -2,8 +2,9 @@ import { Observable } from "rxjs";
 import { RoleResponse } from "../data/roles/RoleResponse";
 import { BaseWebService } from "./base-web.service";
 import { ApiResponse } from "../data/ApiResponse";
-import { GET_ALL_ROLES, GET_ROLE_BY_FULL_ID } from "../data/constants/ApiConstants";
+import { ADD_ROLE, DELETE_ROLE, GET_ALL_ROLES, GET_ROLE_BY_FULL_ID } from "../data/constants/ApiConstants";
 import { Injectable } from "@angular/core";
+import { AddRoleRequest } from "../data/roles/AddRoleRequest";
 
 @Injectable({ 
 	providedIn: 'root' 
@@ -16,5 +17,13 @@ export class RolesService extends BaseWebService {
 
 	getFullRoleDetails(roleId: string): Observable<ApiResponse<RoleResponse>> {
 		return this.get<RoleResponse>(`${GET_ROLE_BY_FULL_ID}/${roleId}`);
+	}
+
+	addRole(role: AddRoleRequest): Observable<ApiResponse<RoleResponse>> {
+		return this.post<RoleResponse>(ADD_ROLE, role);
+	}
+
+	deleteRole(roleId: string): Observable<ApiResponse<string>> {
+		return this.delete<string>(DELETE_ROLE.replace('{roleId}', roleId));
 	}
 }

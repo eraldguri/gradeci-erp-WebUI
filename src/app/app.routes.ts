@@ -21,10 +21,6 @@ export const routes: Routes = [
                 path: 'dashboard',
                 loadComponent: () => import('./features/dashboard/dashboard-view/dashboard-view').then(m => m.DashboardView)
             },
-            { 
-                path: 'inventory',
-                loadChildren: () => import('./features/inventory/inventory.routes').then(m => m.INVENTORY_ROUTES)
-            },
             {
                 path: 'profile',
                 loadComponent: () => import('./features/profile/profile-view/profile-view').then(m => m.ProfileView)
