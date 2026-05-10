@@ -40,6 +40,10 @@ export const routes: Routes = [
             {
                 path: 'roles',
                 loadComponent: () => import('./features/profile/role-management/role-management').then(m => m.RoleManagement)
+            },
+            {
+                path: 'company',
+                loadComponent: () => import('./features/profile/company-management/company-management').then(m => m.CompanyManagement)
             }
         ]
     }

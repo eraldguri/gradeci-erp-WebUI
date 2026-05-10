@@ -3,7 +3,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
 import { Router } from '@angular/router';
 import { LocalStorageService } from '../../../core/services/local-storage.service';
-import { AUTH_TOKEN, USER_DATA, USER_PREFS } from '../../../core/data/constants/UserSettingsConstants';
+import { AUTH_TOKEN, USER_DATA } from '../../../core/data/constants/UserSettingsConstants';
 import { EMAIL_ADDRESS, JwtPayload, MOBILE_PHONE, NAME, NAME_IDENTIFIER, ROLE, SURNAME } from '../../../core/data/JwtPayload';
 
 @Component({
@@ -62,6 +62,8 @@ export class LoginPage {
 					});
 
 					this.storage.setItem(AUTH_TOKEN, response.data.jwt);
+					this.storage.setItem("refreshToken", response.data.refreshToken);
+					this.storage.setItem("refreshTokenExpiryDate", response.data.refreshTokenExpiryDate);
 					this.storage.setItem(USER_DATA, this.user());
 
 					setTimeout(() => {

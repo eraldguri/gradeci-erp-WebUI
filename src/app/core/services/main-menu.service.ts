@@ -108,6 +108,10 @@ export class MainMenuService {
         return permissions?.some(permission => permission === "Permission.Roles.Read") ?? false;
     }
 
+    hasReadCompanyPermission(permissions: string[]): boolean {
+        return permissions?.some(permission => permission === "Permission.Companies.Read") ?? false;
+    }
+
     private isFeatureEnabled(feature: string): boolean {
         const userSettings = this.getUserSettings();
         // Implement your feature flag logic here

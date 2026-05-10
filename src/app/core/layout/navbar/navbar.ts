@@ -70,6 +70,10 @@ export class Navbar implements OnInit {
 				child: { label: 'Roles', route: '/roles' },
 				condition: () => this.menuService.hasReadRolesPermission(this.permissions())
 			},
+			{
+				child: { label: 'Company', route: '/company' },
+				condition: () => this.menuService.hasReadCompanyPermission(this.permissions())
+			},
             {
                 child: { label: 'Logout', route: '/logout' },
                 condition: () => true

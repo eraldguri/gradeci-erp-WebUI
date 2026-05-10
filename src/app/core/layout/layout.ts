@@ -4,9 +4,8 @@ import { Sidebar } from "./sidebar/sidebar";
 import { Router, RouterOutlet } from "@angular/router";
 import { LocalStorageService } from '../services/local-storage.service';
 import { AuthService } from '../services/auth.service';
-import { EMAIL_ADDRESS, JwtPayload, MOBILE_PHONE, NAME, NAME_IDENTIFIER, ROLE, SURNAME } from '../data/JwtPayload';
 import { MainMenuService } from '../services/main-menu.service';
-import { USER_DATA, USER_PREFS } from '../data/constants/UserSettingsConstants';
+import { USER_DATA } from '../data/constants/UserSettingsConstants';
 import { Toast } from "../widgets/toast/toast";
 
 @Component({
@@ -19,10 +18,8 @@ export class Layout implements OnInit {
 	sidebarCollapsed = signal(false);
   	isMobileSidebarOpen = signal(false);
 
-	private authService = inject(AuthService);
 	private storage = inject(LocalStorageService);
 	private mainMenuService = inject(MainMenuService);
-	private router = inject(Router);
 
 	user = signal<CurrentUser | null>(null);
 

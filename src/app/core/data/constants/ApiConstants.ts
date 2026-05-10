@@ -1,6 +1,7 @@
 export const BASE_URL = "https://localhost:7114/api/";
 
 export const LOGIN = BASE_URL + "Token/login";
+export const REFRESH_TOKEN = BASE_URL + "Token/refresh-token";
 
 // Users API
 export const REGISTER_USER = BASE_URL + "Users/register";

@@ -2,7 +2,6 @@ import { Component, computed, effect, inject, OnInit, signal } from '@angular/co
 import { FormBuilder, ReactiveFormsModule } from "@angular/forms";
 import { LocalStorageService } from '../../../core/services/local-storage.service';
 import { USER_DATA } from '../../../core/data/constants/UserSettingsConstants';
-import { AuthService } from '../../../core/services/auth.service';
 import { UserService } from '../../../core/services/user.service';
 import { ToastService } from '../../../core/widgets/toast/toast.service';
 import { CountryService } from '../../../core/services/country.service';
@@ -18,7 +17,6 @@ export class ProfileView implements OnInit {
 	
 	private fb = inject(FormBuilder);
 	private storageService = inject(LocalStorageService);
-	private authService = inject(AuthService);
 	private userService = inject(UserService);
 	private toastService = inject(ToastService);
 	private countryService = inject(CountryService);
