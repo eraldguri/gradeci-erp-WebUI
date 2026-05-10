@@ -33,3 +33,7 @@ export const GET_ROLE_BY_FULL_ID = BASE_URL + "Roles/full";
 export const ADD_ROLE = BASE_URL + "Roles/add";
 export const DELETE_ROLE = BASE_URL + "Roles/delete/{roleId}";
 export const UPDATE_PERMISSIONS = BASE_URL + "Roles/update-permissions";
+
+// Companies API
+export const GET_ALL_COMPANIES = BASE_URL + "Companies/all";
+export const GET_COMPANY_BY_ID = BASE_URL + "Companies/{companyId}";
