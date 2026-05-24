@@ -25,28 +25,28 @@ export class AuthService extends BaseWebService {
     }
 
     refreshToken(): Observable<ApiResponse<LoginResponse>> {
-    const currentJwt = this.storageService.getItem<string>(AUTH_TOKEN);
-    const currentRefreshToken = this.storageService.getItem<string>('refreshToken');
-    const refreshTokenExpiryDate = this.storageService.getItem<string>('refreshTokenExpiryDate');
+        const currentJwt = this.storageService.getItem<string>(AUTH_TOKEN);
+        const currentRefreshToken = this.storageService.getItem<string>('refreshToken');
+        const refreshTokenExpiryDate = this.storageService.getItem<string>('refreshTokenExpiryDate');
 
-    // If data is missing, throw an error so the Interceptor can catch it and logout
-    if (!currentJwt || !currentRefreshToken || !refreshTokenExpiryDate) {
-        return throwError(() => new Error('Missing refresh metadata'));
+        // If data is missing, throw an error so the Interceptor can catch it and logout
+        if (!currentJwt || !currentRefreshToken || !refreshTokenExpiryDate) {
+            return throwError(() => new Error('Missing refresh metadata'));
+        }
+
+        const requestData: RefreshTokenRequest = {
+            currentJwt,
+            currentRefreshToken,
+            refreshTokenExpiryDate
+        };
+
+        return this.http.post<ApiResponse<LoginResponse>>(`${REFRESH_TOKEN}`, requestData).pipe(
+            tap(response => {
+                this.storageService.setItem(AUTH_TOKEN, response.data.jwt);
+                this.storageService.setItem('refreshToken', response.data.refreshToken);
+            })
+        );
     }
-
-    const requestData: RefreshTokenRequest = {
-        currentJwt,
-        currentRefreshToken,
-        refreshTokenExpiryDate
-    };
-
-    return this.http.post<ApiResponse<LoginResponse>>(`${REFRESH_TOKEN}`, requestData).pipe(
-        tap(response => {
-            this.storageService.setItem(AUTH_TOKEN, response.data.jwt);
-            this.storageService.setItem('refreshToken', response.data.refreshToken);
-        })
-    );
-}
 
     // refreshToken(): void {
     //     const currentJwt = this.storageService.getItem<string>(AUTH_TOKEN);

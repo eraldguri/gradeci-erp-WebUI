@@ -1,181 +1,80 @@
+:host {
+  --sidebar-bg: #1e2432;         
+  --sidebar-hover-bg: #171c26;    
+  --sidebar-active-bg: #151922;  
+  --text-muted-color: #94a3b8;   
+  --text-active-color: #ffffff;  
+}
+
 .sidebar {
-    height: 100%; 
-    width: 260px;
-    background: #fff;
-    border-right: 1px solid #ddd;
-    transition: width .2s;
-    overflow: hidden;
-  }
+  width: 260px;
+  height: 100vh;
+  background-color: var(--sidebar-bg);
+  transition: width 0.2s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
 
 .sidebar.collapsed {
-	width: 70px;
+  width: 70px;
 }
 
-.sidebar-logo {
-  display: flex;
-  align-items: center;
-  font-family: 'Inter', system-ui, sans-serif;
-  cursor: pointer;
-  padding: 10px;
-
-  .g-box {
-    background-color: #00d2ff; // Bright Accent Color
-    color: #1e272e;           // Dark text inside the light box
-    font-weight: 800;
-    font-size: 20px;
-    width: 32px;
-    height: 32px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 6px;       // Modern "Squircle" look
-    margin-right: 10px;
-    box-shadow: 0 4px 10px rgba(0, 210, 255, 0.3);
-  }
-
-  .text-remainder {
-    color: #ffffff;           // Pure white for high contrast
-    font-size: 22px;
-    font-weight: 500;
-    letter-spacing: -0.5px;
-    opacity: 0.95;            // Slightly softer than pure white
-  }
-}
-
-.nav {
-	list-style: none;
-	padding: 0 8px;
-	margin: 0;
-}
-
-.nav-item {
-	margin-bottom: 4px;
-	list-style: none;
+.g-box {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
 }
 
 .nav-link {
-  padding: 10px 12px;
-  color: #4a5568;
-  text-decoration: none;
-  border-radius: 8px;
-  transition: all 0.2s ease;
+  color: var(--text-muted-color) !important;
+  font-size: 0.925rem;
+  font-weight: 400;
   cursor: pointer;
+  transition: all 0.15s ease-in-out;
+}
+
+.nav-link:hover {
+  background-color: var(--sidebar-hover-bg);
+  color: var(--text-active-color) !important;
+}
+
+.nav-link.active {
+  background-color: var(--sidebar-active-bg);
+  color: var(--text-active-color) !important;
   font-weight: 500;
-  font-size: 14px;
-
-  &:hover {
-    background-color: rgb(96, 141, 169);
-    color: #00b7e0;
-    
-    i {
-      color: #00b7e0;
-    }
-  }
-
-  &.active {
-    background-color: #11516f;
-    color: #5098a8;
-    
-    i {
-      color: #00b7e0;
-    }
-  }
-
-  i {
-    font-size: 1.2rem;
-    margin-right: 12px;
-    color: #718096;
-    transition: color 0.2s ease;
-    min-width: 20px;
-  }
-
-  .nav-label {
-    white-space: nowrap;
-  }
-
-  .dropdown-icon {
-    font-size: 0.9rem;
-    margin-right: 0;
-    opacity: 0.7;
-    transition: transform 0.2s ease;
-  }
 }
 
-.has-children {
-  .nav-link {
-    margin-bottom: 4px;
-  }
+.nav-link i.bi {
+  color: var(--text-muted-color);
+  transition: color 0.15s ease;
+}
+.nav-link:hover i.bi,
+.nav-link.active i.bi {
+  color: var(--text-active-color);
 }
 
-.child-menu {
-  list-style: none;
-  padding-left: 32px;
-  margin: 4px 0 8px 0;
+.dropdown-icon {
+  font-size: 0.75rem;
 }
 
 .child-link {
-  padding: 8px 12px;
-  color: #64748b;
-  text-decoration: none;
-  border-radius: 6px;
-  transition: all 0.2s ease;
+  color: var(--text-muted-color) !important;
   cursor: pointer;
-  font-size: 13px;
-  font-weight: 400;
-
-  &:hover {
-    background-color: #f8fafc;
-    color: #00b7e0;
-    
-    .bullet {
-      background-color: #00b7e0;
-    }
-  }
-
-  &.active {
-    background-color: #f0f9ff;
-    color: #00b7e0;
-    font-weight: 500;
-    
-    .bullet {
-      background-color: #00b7e0;
-      transform: scale(1.1);
-    }
-  }
-
-  .bullet {
-    width: 6px;
-    height: 6px;
-    background-color: #cbd5e1;
-    border-radius: 50%;
-    margin-right: 12px;
-    margin-left: 5px;
-    transition: all 0.2s ease;
-  }
-
-  .child-label {
-    white-space: nowrap;
-  }
+  transition: all 0.15s ease;
 }
 
-/* Scrollbar styling */
-.sidebar {
-  overflow-y: auto;
-  
-  &::-webkit-scrollbar {
-    width: 4px;
-  }
-  
-  &::-webkit-scrollbar-track {
-    background: #f1f1f1;
-  }
-  
-  &::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
-    border-radius: 4px;
-    
-    &:hover {
-      background: #94a3b8;
-    }
-  }
+.child-link:hover,
+.child-link.active {
+  color: var(--text-active-color) !important;
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+.sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
 }

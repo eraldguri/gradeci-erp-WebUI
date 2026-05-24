@@ -1,36 +1,48 @@
-<nav class="navbar navbar-light bg-white border-bottom px-3">
-	<button class="btn btn-outline-secondary me-3" (click)="toggleSidebar.emit()">
-		☰
-	</button>
+<nav class="navbar navbar-expand bg-white border-bottom px-4 py-2">
+    <button class="btn btn-link text-secondary p-1 me-3 border-0" (click)="toggleSidebar.emit()" style="box-shadow: none;">
+        <i class="bi bi-list fs-4"></i>
+    </button>
 
-	<span class="fw-semibold">ERP System</span>
+    <span class="navbar-title fw-semibold text-dark fs-5">Dashboard</span>
 
-	<div class="ms-auto d-flex align-items-center gap-3">
-		<!-- @if (notifications > 0) {
-		<span class="badge bg-danger">
-			{{notifications}}
-		</span>
-		} -->
+    <div class="ms-auto d-flex align-items-center gap-3">
+        
+        <div class="d-none d-md-flex align-items-center gap-3 text-secondary me-2">
+            <i class="bi bi-search cursor-pointer navbar-icon" title="Search"></i>
+            <i class="bi bi-sticky cursor-pointer navbar-icon" title="Notes"></i>
+            <i class="bi bi-clock cursor-pointer navbar-icon" title="Timelog"></i>
+            <i class="bi bi-plus-circle cursor-pointer navbar-icon" title="Quick Create"></i>
+            <i class="bi bi-bell cursor-pointer navbar-icon" title="Notifications"></i>
+        </div>
 
-		<div class="dropdown" ngbDropdown>
+        <button class="btn btn-sm px-3 py-2 fw-semibold d-flex align-items-center gap-2 clock-btn">
+            <i class="bi bi-box-arrow-in-right"></i> Clock In
+        </button>
 
-			<button class="btn btn-light dropdown-toggle" ngbDropdownToggle type="button">
-				{{ userData?.name }}
-			</button>
+        <div class="dropdown" ngbDropdown>
+            <button class="btn btn-user-dropdown d-flex align-items-center gap-2 border-0 px-2 py-1 rounded" ngbDropdownToggle type="button">
+                <div class="avatar-circle bg-light border text-secondary fw-semibold d-flex align-items-center justify-content-center rounded-circle">
+                    {{ userData?.name?.charAt(0) || 'U' }}
+                </div>
+                <span class="d-none d-sm-inline fw-medium text-dark small">{{ userData?.name }}</span>
+            </button>
 
-			<ul class="dropdown-menu dropdown-menu-end" ngbDropdownMenu>
-				@for (item of menuItems(); track $index) {
-					@if (item.menuType === 'navbar') {
-						@for (child of item.children; track $index) {
-							<li>
-								<a class="dropdown-item" style="cursor: pointer;" (click)="onUserDropdownItemClick(child.route ?? '')">{{child.label}}</a>
-							</li>
-						}
-						
-					}
-				}
-			</ul>
+            <ul class="dropdown-menu dropdown-menu-end shadow-sm border-light mt-2 py-1" ngbDropdownMenu>
+                @for (item of menuItems(); track $index) {
+                    @if (item.menuType === 'navbar') {
+                        @for (child of item.children; track $index) {
+                            <li>
+                                <a class="dropdown-item py-2 px-3 small text-secondary cursor-pointer" 
+                                   (click)="onUserDropdownItemClick(child.route ?? '')">
+                                    {{child.label}}
+                                </a>
+                            </li>
+                        }
+                    }
+                }
+            </ul>
+        </div>
 
-		</div>
-	</div>
+        <i class="bi bi-gear text-secondary cursor-pointer navbar-icon fs-5" title="Settings"></i>
+    </div>
 </nav>
