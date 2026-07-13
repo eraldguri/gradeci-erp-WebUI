@@ -1,15 +1,15 @@
 <div [formGroup]="phoneForm">
-    <div class="input-group has-validation">
+    <div class="input-group">
         <select 
             class="form-select flex-grow-0" 
             style="width: 120px;" 
             formControlName="countryCode"
-            [class.is-invalid]="phoneForm.get('countryCode')?.touched && phoneForm.get('countryCode')?.invalid">
+            (change)="onCountrySelect($event)">
             
-            <option value="" disabled>Code</option>
-            @for(country of countries(); track country.name) {
+            <option value="">Code</option>
+            @for(country of countryOptions(); track country.code) {
                 <option [value]="country.code">
-                    {{ country.code }}
+                    {{ country.display }}
                 </option>
             }
         </select>
@@ -19,16 +19,6 @@
             class="form-control" 
             formControlName="phoneNumber" 
             placeholder="Enter number"
-            [class.is-invalid]="(phoneForm.get('phoneNumber')?.touched && phoneForm.get('phoneNumber')?.invalid) || (phoneForm.hasError('invalidInternationalPhone') && (phoneForm.get('phoneNumber')?.touched || phoneForm.get('countryCode')?.touched))" />
-
-        @if(phoneForm.get('countryCode')?.errors?.['required'] && phoneForm.get('countryCode')?.touched) {
-            <div class="invalid-feedback d-block">Country code is required.</div>
-        }
-        @if(phoneForm.get('phoneNumber')?.errors?.['required'] && phoneForm.get('phoneNumber')?.touched) {
-            <div class="invalid-feedback d-block">Phone number is required.</div>
-        }
-        @if(phoneForm.hasError('invalidInternationalPhone') && (phoneForm.get('phoneNumber')?.touched || phoneForm.get('countryCode')?.touched)) {
-            <div class="invalid-feedback d-block">Please enter a valid phone number for this country code.</div>
-        }
+            (input)="onPhoneInput($event)" />
     </div>
 </div>

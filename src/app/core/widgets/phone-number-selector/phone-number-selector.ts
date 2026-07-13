@@ -1,4 +1,5 @@
-import { Component, computed, effect, inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+// components/phone-number-selector/phone-number-selector.ts
+import { Component, computed, effect, inject, Input } from '@angular/core';
 import { CountryService } from '../../services/country.service';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { parsePhoneNumberWithError } from 'libphonenumber-js';
@@ -10,42 +11,62 @@ import { parsePhoneNumberWithError } from 'libphonenumber-js';
   styleUrl: './phone-number-selector.scss',
 })
 export class PhoneNumberSelector {
-	@Input() phoneNumber!: string;
+  @Input() phoneNumber!: string;
 
-	private countryService = inject(CountryService);
-	private fb = inject(FormBuilder);
+  private countryService = inject(CountryService);
+  private fb = inject(FormBuilder);
 
-	countries = this.countryService.countries;
-	errorMessage = this.countryService.error;
+  countries = this.countryService.countries;
+  errorMessage = this.countryService.error;
 
-	isLoading = computed(() => this.countries.length === 0 && !this.errorMessage());
+  isLoading = computed(() => this.countries().length === 0 && !this.errorMessage());
 
-	phoneForm = this.fb.group({
-		countryCode: [''],
-		phoneNumber: ['']
-	});
+  countryOptions = computed(() => {
+    return this.countries().map(country => ({
+      code: country.code,
+      flag: country.flag,
+      phoneCode: country.phoneCode,
+      display: `${country.flag} + ${country.phoneCode}`
+    }));
+  });
 
-	constructor() {
-		effect(() => {
-			if (this.countries().length > 0 && this.phoneNumber) {
-				this.parseAndSetPhone(this.phoneNumber);
-			}
-		});
-	}
+  phoneForm = this.fb.group({
+    countryCode: [''],
+    phoneNumber: ['']
+  });
 
-	private parseAndSetPhone(fullNumber: string): void {
-		try {
-			const cleanNumber = fullNumber.startsWith('+') ? fullNumber : `+${fullNumber}`;
-			const parsed = parsePhoneNumberWithError(cleanNumber);
-			
-			const dialCode = `+${parsed.countryCallingCode}`;
+  constructor() {
+    effect(() => {
+      if (this.countries().length > 0 && this.phoneNumber) {
+        this.parseAndSetPhone(this.phoneNumber);
+      }
+    });
+  }
 
-			this.phoneForm.patchValue({
-				countryCode: dialCode,
-				phoneNumber: parsed.nationalNumber
-			});
-		} catch (e) {
-			this.phoneForm.get('phoneNumber')?.setValue(fullNumber);
-		}
-	}
+  private parseAndSetPhone(fullNumber: string): void {
+    try {
+      const cleanNumber = fullNumber.startsWith('+') ? fullNumber : `+${fullNumber}`;
+      const parsed = parsePhoneNumberWithError(cleanNumber);
+      const dialCode = `+${parsed.countryCallingCode}`;
+      this.phoneForm.patchValue({
+        countryCode: dialCode,
+        phoneNumber: parsed.nationalNumber
+      });
+    } catch (e) {
+      this.phoneForm.get('phoneNumber')?.setValue(fullNumber);
+    }
+  }
+
+  onPhoneInput(event: Event) {
+    const input = event.target as HTMLInputElement;
+    let value = input.value.replace(/[^0-9+]/g, '');
+    input.value = value;
+    this.phoneForm.get('phoneNumber')?.setValue(value);
+  }
+
+  onCountrySelect(event: Event): void {
+	const select = event.target as HTMLSelectElement;
+    const selectedValue = select.value;
+    this.phoneForm.get('countryCode')?.setValue(selectedValue);
+  }
 }
